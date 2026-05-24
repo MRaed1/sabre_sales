@@ -250,3 +250,25 @@ app_license = "mit"
 # List of apps whose translatable strings should be excluded from this app's translations.
 # ignore_translatable_strings_from = []
 
+fixtures = [
+    {
+        "doctype": "DocType",
+        "filters": [["module", "=", "Sabre Sales"]]
+    },
+    {
+        "doctype": "Server Script",
+        "filters": [["module", "=", "Sabre Sales"]]
+    },
+    {
+        "doctype": "Client Script",
+        "filters": [["module", "=", "Sabre Sales"]]
+    },
+    {
+        "doctype": "Workflow",
+        "filters": [["document_type", "=", "Sabre Sales Opportunity"]]
+    },
+    {
+        "doctype": "Notification",
+        "filters": [["document_type", "=", "Sabre Sales Opportunity"]]
+    }
+]

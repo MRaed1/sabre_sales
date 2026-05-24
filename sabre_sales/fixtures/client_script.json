@@ -1,0 +1,24 @@
+[
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Sabre Sales Opportunity",
+  "enabled": 1,
+  "modified": "2026-05-21 15:41:25.546564",
+  "module": "Sabre Sales",
+  "name": "client-sabre-sales-opportunity",
+  "script": "frappe.ui.form.on('Sabre Sales Opportunity', {\r\n\r\n    // عند فتح الفورم\r\n    refresh(frm) {\r\n        // إخفاء expected_revenue في البداية\r\n        frm.toggle_display('expected_revenue', false);\r\n        \r\n        // تشغيل trigger الخاص بـ opportunity_type\r\n        if (frm.doc.opportunity_type) {\r\n            frm.trigger('opportunity_type');\r\n        }\r\n    },\r\n\r\n    // عند تغيير نوع الفرصة\r\n    opportunity_type(frm) {\r\n        if (frm.doc.opportunity_type === 'Renewal') {\r\n            // إظهار Expected Revenue فقط عند Renewal\r\n            frm.toggle_display('expected_revenue', true);\r\n            frm.set_df_property('expected_revenue', 'reqd', 1);\r\n        } else {\r\n            frm.toggle_display('expected_revenue', false);\r\n            frm.set_df_property('expected_revenue', 'reqd', 0);\r\n        }\r\n    },\r\n\r\n    // عند تغيير assigned_to\r\n    assigned_to(frm) {\r\n        if (frm.doc.assigned_to === 'Product') {\r\n            frm.set_value('pipeline_am', '');\r\n            frappe.msgprint(\"تم تعيين المسؤول للـ Product Team\");\r\n        }\r\n    }\r\n\r\n});",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Sabre Qualification Checklist",
+  "enabled": 1,
+  "modified": "2026-05-21 16:09:14.637140",
+  "module": "Sabre Sales",
+  "name": "client-sabre-qualification-checklist",
+  "script": "frappe.ui.form.on('Sabre Qualification Checklist', {\r\n\r\n    // عند فتح الفورم\r\n    refresh(frm) {\r\n        // إخفاء reason_code في البداية\r\n        frm.toggle_display('reason_code', false);\r\n\r\n        // تشغيل trigger الخاص بـ qualified\r\n        if (frm.doc.qualified) {\r\n            frm.trigger('qualified');\r\n        }\r\n    },\r\n\r\n    // عند تغيير نتيجة التأهيل\r\n    qualified(frm) {\r\n        if (frm.doc.qualified === 'No') {\r\n            // إظهار Reason Code وجعله إلزامي\r\n            frm.toggle_display('reason_code', true);\r\n            frm.set_df_property('reason_code', 'reqd', 1);\r\n        } else {\r\n            // إخفاء Reason Code\r\n            frm.toggle_display('reason_code', false);\r\n            frm.set_df_property('reason_code', 'reqd', 0);\r\n            frm.set_value('reason_code', '');\r\n        }\r\n    },\r\n\r\n    // عند اختيار الـ Opportunity\r\n    opportunity(frm) {\r\n        if (frm.doc.opportunity) {\r\n            // جلب بيانات الـ Opportunity تلقائياً\r\n            frappe.db.get_value(\r\n                'Sabre Sales Opportunity',\r\n                frm.doc.opportunity,\r\n                ['customer', 'pipeline_am'],\r\n                (data) => {\r\n                    if (data) {\r\n                        frappe.show_alert({\r\n                            message: `Customer: ${data.customer} | AM: ${data.pipeline_am}`,\r\n                            indicator: 'blue'\r\n                        });\r\n                    }\r\n                }\r\n            );\r\n        }\r\n    }\r\n\r\n});",
+  "view": "Form"
+ }
+]
