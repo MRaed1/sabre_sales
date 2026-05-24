@@ -93,5 +93,43 @@
   "reference_doctype": "Sabre Business Case",
   "script": "if doc.opportunity and doc.status:\r\n\r\n    if doc.status == \"Approved\":\r\n        frappe.db.set_value(\r\n            \"Sabre Sales Opportunity\",\r\n            doc.opportunity,\r\n            \"workflow_state\",\r\n            \"Contract\",\r\n            update_modified=False\r\n        )\r\n        frappe.msgprint(\r\n            f\"✅ تم اعتماد Business Case — الفرصة {doc.opportunity} انتقلت إلى Contract\"\r\n        )\r\n\r\n    elif doc.status == \"Rejected\":\r\n        frappe.db.set_value(\r\n            \"Sabre Sales Opportunity\",\r\n            doc.opportunity,\r\n            \"workflow_state\",\r\n            \"Qualification\",\r\n            update_modified=False\r\n        )\r\n        frappe.msgprint(\r\n            f\"↩️ تم رفض Business Case — الفرصة {doc.opportunity} أُعيدت إلى Qualification\"\r\n        )\r\n\r\n    elif doc.status == \"Sent\":\r\n        frappe.db.set_value(\r\n            \"Sabre Sales Opportunity\",\r\n            doc.opportunity,\r\n            \"workflow_state\",\r\n            \"Business Case\",\r\n            update_modified=False\r\n        )\r\n        frappe.msgprint(\r\n            f\"📤 تم إرسال Business Case للمراجعة\"\r\n        )",
   "script_type": "DocType Event"
+ },
+ {
+  "allow_guest": 0,
+  "api_method": null,
+  "cron_format": null,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Server Script",
+  "doctype_event": "Before Save",
+  "enable_rate_limit": 0,
+  "event_frequency": "All",
+  "modified": "2026-05-25 00:14:12.173993",
+  "module": "Sabre Sales",
+  "name": "validate-sabre-contract",
+  "rate_limit_count": 5,
+  "rate_limit_seconds": 86400,
+  "reference_doctype": "Sabre Contract",
+  "script": "# التحقق من الحقول الأساسية\r\nif not doc.opportunity:\r\n    frappe.throw(\"يجب ربط العقد بفرصة بيع\")\r\n\r\nif not doc.customer:\r\n    frappe.throw(\"يجب تحديد العميل\")\r\n\r\nif not doc.contract_type:\r\n    frappe.throw(\"يجب تحديد نوع العقد\")\r\n\r\nif not doc.contract_date:\r\n    frappe.throw(\"يجب تحديد تاريخ العقد\")\r\n\r\nif not doc.start_date:\r\n    frappe.throw(\"يجب تحديد تاريخ البداية\")\r\n\r\nif not doc.end_date:\r\n    frappe.throw(\"يجب تحديد تاريخ الانتهاء\")\r\n\r\n# التحقق من التواريخ\r\nif doc.start_date and doc.end_date:\r\n    if doc.end_date <= doc.start_date:\r\n        frappe.throw(\"تاريخ الانتهاء يجب أن يكون بعد تاريخ البداية\")\r\n\r\n# التحقق من Notes عند الرفض\r\nif doc.head_of_sales_review == \"Rejected\" and not doc.notes:\r\n    frappe.throw(\"يجب إدخال سبب الرفض في Notes\")",
+  "script_type": "DocType Event"
+ },
+ {
+  "allow_guest": 0,
+  "api_method": null,
+  "cron_format": null,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Server Script",
+  "doctype_event": "After Save",
+  "enable_rate_limit": 0,
+  "event_frequency": "All",
+  "modified": "2026-05-25 00:15:17.306295",
+  "module": "Sabre Sales",
+  "name": "update-opportunity-after-contract",
+  "rate_limit_count": 5,
+  "rate_limit_seconds": 86400,
+  "reference_doctype": "Sabre Contract",
+  "script": "if doc.opportunity and doc.head_of_sales_review:\r\n\r\n    if doc.head_of_sales_review == \"Approved\":\r\n        frappe.db.set_value(\r\n            \"Sabre Sales Opportunity\",\r\n            doc.opportunity,\r\n            \"workflow_state\",\r\n            \"Implementation\",\r\n            update_modified=False\r\n        )\r\n        frappe.msgprint(\r\n            f\"✅ تم اعتماد العقد — الفرصة {doc.opportunity} انتقلت إلى Implementation\"\r\n        )\r\n\r\n    elif doc.head_of_sales_review == \"Rejected\":\r\n        frappe.db.set_value(\r\n            \"Sabre Sales Opportunity\",\r\n            doc.opportunity,\r\n            \"workflow_state\",\r\n            \"Business Case\",\r\n            update_modified=False\r\n        )\r\n        frappe.msgprint(\r\n            f\"↩️ تم رفض العقد — الفرصة {doc.opportunity} أُعيدت إلى Business Case\"\r\n        )\r\n\r\n    elif doc.head_of_sales_review == \"Pending\":\r\n        frappe.db.set_value(\r\n            \"Sabre Sales Opportunity\",\r\n            doc.opportunity,\r\n            \"workflow_state\",\r\n            \"Contract\",\r\n            update_modified=False\r\n        )\r\n        frappe.msgprint(\r\n            f\"⏳ العقد قيد المراجعة\"\r\n        )",
+  "script_type": "DocType Event"
  }
 ]

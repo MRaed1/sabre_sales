@@ -31,5 +31,16 @@
   "name": "client-sabre-business-case",
   "script": "frappe.ui.form.on('Sabre Business Case', {\r\n\r\n    // عند فتح الفورم\r\n    refresh(frm) {\r\n        frm.toggle_display('head_of_sales_notes', false);\r\n\r\n        if (frm.doc.status) {\r\n            frm.trigger('status');\r\n        }\r\n    },\r\n\r\n    // جلب بيانات الـ Opportunity تلقائياً\r\n    opportunity(frm) {\r\n    if (frm.doc.opportunity) {\r\n        frappe.db.get_value(\r\n            'Sabre Sales Opportunity',\r\n            frm.doc.opportunity,\r\n            ['customer', 'pipeline_am', 'airline_mix', 'yoy_review'],\r\n            (data) => {\r\n                if (data) {\r\n                    frm.set_value('customer', data.customer);\r\n                    frm.set_value('pipeline_am', data.pipeline_am);\r\n                    frm.set_value('airline_mix', data.airline_mix);\r\n                    frm.set_value('yoy_review', data.yoy_review);\r\n                }\r\n            }\r\n        );\r\n    }\r\n},\r\n\r\n    // إظهار Head of Sales Notes عند Rejected فقط\r\n    status(frm) {\r\n        if (frm.doc.status === 'Rejected') {\r\n            frm.toggle_display('head_of_sales_notes', true);\r\n            frm.set_df_property('head_of_sales_notes', 'reqd', 1);\r\n        } else {\r\n            frm.toggle_display('head_of_sales_notes', false);\r\n            frm.set_df_property('head_of_sales_notes', 'reqd', 0);\r\n        }\r\n    }\r\n\r\n});",
   "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Sabre Contract",
+  "enabled": 1,
+  "modified": "2026-05-25 00:16:36.355740",
+  "module": "Sabre Sales",
+  "name": "client-sabre-contract",
+  "script": "frappe.ui.form.on('Sabre Contract', {\r\n\r\n    // عند فتح الفورم\r\n    refresh(frm) {\r\n        frm.toggle_display('notes', false);\r\n\r\n        if (frm.doc.head_of_sales_review) {\r\n            frm.trigger('head_of_sales_review');\r\n        }\r\n    },\r\n\r\n    // جلب بيانات الـ Opportunity تلقائياً\r\n    opportunity(frm) {\r\n        if (frm.doc.opportunity) {\r\n            frappe.db.get_value(\r\n                'Sabre Sales Opportunity',\r\n                frm.doc.opportunity,\r\n                ['customer', 'pipeline_am'],\r\n                (data) => {\r\n                    if (data) {\r\n                        frm.set_value('customer', data.customer);\r\n                        frm.set_value('pipeline_am', data.pipeline_am);\r\n                    }\r\n                }\r\n            );\r\n        }\r\n    },\r\n\r\n    // إظهار Notes عند Rejected فقط\r\n    head_of_sales_review(frm) {\r\n        if (frm.doc.head_of_sales_review === 'Rejected') {\r\n            frm.toggle_display('notes', true);\r\n            frm.set_df_property('notes', 'reqd', 1);\r\n        } else {\r\n            frm.toggle_display('notes', false);\r\n            frm.set_df_property('notes', 'reqd', 0);\r\n        }\r\n    }\r\n\r\n});",
+  "view": "Form"
  }
 ]
