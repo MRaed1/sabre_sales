@@ -269,6 +269,6 @@ fixtures = [
     },
     {
         "doctype": "Notification",
-        "filters": [["document_type", "=", "Sabre Sales Opportunity"]]
+        "filters": [["module", "=", "Sabre Sales"]]
     }
 ]
