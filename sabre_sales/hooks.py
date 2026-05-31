@@ -272,3 +272,18 @@ fixtures = [
         "filters": [["module", "=", "Sabre Sales"]]
     }
 ]
+
+fixtures += [
+    {
+        "doctype": "Dashboard",
+        "filters": [["module", "=", "Sabre Sales"]]
+    },
+    {
+        "doctype": "Number Card",
+        "filters": [["module", "=", "Sabre Sales"]]
+    },
+    {
+        "doctype": "Dashboard Chart",
+        "filters": [["module", "=", "Sabre Sales"]]
+    }
+]
