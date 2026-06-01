@@ -1,8 +1,21 @@
 [
  {
   "app": "sabre_sales",
-  "charts": [],
-  "content": "[]",
+  "charts": [
+   {
+    "chart_name": "Opportunities by Stage",
+    "label": "Opportunities by Stage"
+   },
+   {
+    "chart_name": "Pipeline Value by Month",
+    "label": "Pipeline Value by Month"
+   },
+   {
+    "chart_name": "Opportunities by Type",
+    "label": "Opportunities by Type"
+   }
+  ],
+  "content": "[{\"id\":\"XfnW9dks6D\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Welcome to the Sabre Sales workspace</span>\",\"col\":12}},{\"id\":\"RPoCirYEAn\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Sabre Qualification Checklist\",\"col\":3}},{\"id\":\"Uo7tpYXjlC\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Sabre Sales Opportunity\",\"col\":3}},{\"id\":\"A5nZtv0Eau\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Sabre Business Case\",\"col\":3}},{\"id\":\"346DFMwaJ-\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Sabre Contract\",\"col\":3}},{\"id\":\"LWGCz72WzA\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Sabre Implementation\",\"col\":3}},{\"id\":\"4Ped7ROqOU\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Sabre Go-Live\",\"col\":3}},{\"id\":\"OXvX_N6XaP\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Sabre Sales Dashboard\",\"col\":3}},{\"id\":\"1I71qo2RF7\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Opportunities by Stage\",\"col\":12}},{\"id\":\"9LqQYvIr3G\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Pipeline Value by Month\",\"col\":12}},{\"id\":\"5f0KkXyj9L\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Opportunities by Type\",\"col\":12}},{\"id\":\"Z0JyfaY3Ya\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Total Opportunities\",\"col\":4}},{\"id\":\"f5sCNMPs-y\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"In Implementation\",\"col\":4}},{\"id\":\"4tfFRKXEMj\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Lost Opportunities\",\"col\":4}},{\"id\":\"gONXvHDDqk\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Won Opportunities\",\"col\":4}},{\"id\":\"qMJFXHzz2P\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Total Pipeline Value\",\"col\":4}}]",
   "custom_blocks": [],
   "docstatus": 0,
   "doctype": "Workspace",
@@ -16,24 +29,28 @@
   "link_to": null,
   "link_type": "DocType",
   "links": [],
-  "modified": "2026-06-01 14:26:52.142390",
+  "modified": "2026-06-01 14:50:54.825674",
   "module": "Sabre Sales",
   "name": "Sabre Sales",
   "number_cards": [
    {
-    "label": null,
+    "label": "Total Opportunities",
     "number_card_name": "Total Opportunities"
    },
    {
-    "label": null,
-    "number_card_name": "Won Opportunities"
+    "label": "In Implementation",
+    "number_card_name": "In Implementation"
    },
    {
-    "label": null,
+    "label": "Lost Opportunities",
     "number_card_name": "Lost Opportunities"
    },
    {
-    "label": null,
+    "label": "Won Opportunities",
+    "number_card_name": "Won Opportunities"
+   },
+   {
+    "label": "Total Pipeline Value",
     "number_card_name": "Total Pipeline Value"
    }
   ],
@@ -52,21 +69,7 @@
   "sequence_id": 0.0,
   "shortcuts": [
    {
-    "color": null,
-    "doc_view": "List",
-    "format": null,
-    "icon": null,
-    "kanban_board": null,
-    "label": "Sabre Sales Opportunity",
-    "link_to": "Sabre Sales Opportunity",
-    "report_ref_doctype": null,
-    "restrict_to_domain": null,
-    "stats_filter": null,
-    "type": "DocType",
-    "url": null
-   },
-   {
-    "color": null,
+    "color": "Blue",
     "doc_view": "List",
     "format": null,
     "icon": null,
@@ -75,12 +78,26 @@
     "link_to": "Sabre Qualification Checklist",
     "report_ref_doctype": null,
     "restrict_to_domain": null,
-    "stats_filter": null,
+    "stats_filter": "[]",
     "type": "DocType",
     "url": null
    },
    {
-    "color": null,
+    "color": "Blue",
+    "doc_view": "List",
+    "format": null,
+    "icon": null,
+    "kanban_board": null,
+    "label": "Sabre Sales Opportunity",
+    "link_to": "Sabre Sales Opportunity",
+    "report_ref_doctype": null,
+    "restrict_to_domain": null,
+    "stats_filter": "[]",
+    "type": "DocType",
+    "url": null
+   },
+   {
+    "color": "Green",
     "doc_view": "List",
     "format": null,
     "icon": null,
@@ -89,12 +106,12 @@
     "link_to": "Sabre Business Case",
     "report_ref_doctype": null,
     "restrict_to_domain": null,
-    "stats_filter": null,
+    "stats_filter": "[]",
     "type": "DocType",
     "url": null
    },
    {
-    "color": null,
+    "color": "Green",
     "doc_view": "List",
     "format": null,
     "icon": null,
@@ -103,12 +120,12 @@
     "link_to": "Sabre Contract",
     "report_ref_doctype": null,
     "restrict_to_domain": null,
-    "stats_filter": null,
+    "stats_filter": "[]",
     "type": "DocType",
     "url": null
    },
    {
-    "color": null,
+    "color": "Orange",
     "doc_view": "List",
     "format": null,
     "icon": null,
@@ -117,12 +134,12 @@
     "link_to": "Sabre Implementation",
     "report_ref_doctype": null,
     "restrict_to_domain": null,
-    "stats_filter": null,
+    "stats_filter": "[]",
     "type": "DocType",
     "url": null
    },
    {
-    "color": null,
+    "color": "Orange",
     "doc_view": "List",
     "format": null,
     "icon": null,
@@ -131,13 +148,13 @@
     "link_to": "Sabre Go-Live",
     "report_ref_doctype": null,
     "restrict_to_domain": null,
-    "stats_filter": null,
+    "stats_filter": "[]",
     "type": "DocType",
     "url": null
    },
    {
-    "color": null,
-    "doc_view": "Dashboard",
+    "color": "Grey",
+    "doc_view": "List",
     "format": null,
     "icon": null,
     "kanban_board": null,
