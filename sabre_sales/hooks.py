@@ -294,3 +294,10 @@ fixtures += [
         "filters": [["module", "=", "Sabre Sales"]]
     }
 ]
+
+fixtures += [
+    {
+        "doctype": "Print Format",
+        "filters": [["module", "=", "Sabre Sales"]]
+    }
+]
