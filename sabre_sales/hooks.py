@@ -60,9 +60,10 @@ app_license = "mit"
 # home_page = "login"
 
 # website user home page (by Role)
-# role_home_page = {
-# 	"Role": "home_page"
-# }
+role_home_page = {
+    "Sabre Account Manager": "sabre-sales",
+    "Sabre Finance Manager": "sabre-sales"
+}
 
 # Generators
 # ----------
