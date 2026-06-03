@@ -4,10 +4,10 @@
   "doctype": "Client Script",
   "dt": "Sabre Sales Opportunity",
   "enabled": 1,
-  "modified": "2026-05-25 15:35:16.932122",
+  "modified": "2026-06-03 16:20:41.377399",
   "module": "Sabre Sales",
   "name": "client-sabre-sales-opportunity",
-  "script": "frappe.ui.form.on('Sabre Sales Opportunity', {\r\n\r\n    refresh(frm) {\r\n        if (frm.doc.opportunity_type) {\r\n            frm.trigger('opportunity_type');\r\n        }\r\n\r\n        // زر فتح Qualification Checklist تلقائياً\r\n        if (frm.doc.workflow_state === 'Qualification' && !frm.is_new()) {\r\n            frm.add_custom_button('📋 فتح Qualification Checklist', () => {\r\n                frappe.new_doc('Sabre Qualification Checklist', {\r\n                    opportunity: frm.doc.name\r\n                });\r\n            }).addClass('btn-primary');\r\n        }\r\n    }\r\n\r\n});",
+  "script": "frappe.ui.form.on('Sabre Sales Opportunity', {\r\n\r\n    refresh(frm) {\r\n        if (frm.doc.opportunity_type) {\r\n            frm.trigger('opportunity_type');\r\n        }\r\n\r\n        // زر فتح Qualification Checklist لـ Sabre Account Manager فقط\r\n        if (frm.doc.workflow_state === 'Qualification' && !frm.is_new() && frappe.user_roles.includes('Sabre Account Manager')) {\r\n            frm.add_custom_button('📋 فتح Qualification Checklist', () => {\r\n                frappe.new_doc('Sabre Qualification Checklist', {\r\n                    opportunity: frm.doc.name\r\n                });\r\n            }).addClass('btn-primary');\r\n        }\r\n    }\r\n\r\n});",
   "view": "Form"
  },
  {
