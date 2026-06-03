@@ -301,3 +301,20 @@ fixtures += [
         "filters": [["module", "=", "Sabre Sales"]]
     }
 ]
+fixtures += [
+    {
+        "doctype": "Role",
+        "filters": [["name", "in", ["Sabre Account Manager", "Sabre Finance Manager"]]]
+    },
+    {
+        "doctype": "Custom DocPerm",
+        "filters": [["parent", "in", [
+            "Sabre Sales Opportunity",
+            "Sabre Qualification Checklist",
+            "Sabre Business Case",
+            "Sabre Contract",
+            "Sabre Implementation",
+            "Sabre Go-Live"
+        ]]]
+    }
+]
