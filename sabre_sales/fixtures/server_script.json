@@ -28,13 +28,13 @@
   "doctype_event": "Before Save",
   "enable_rate_limit": 0,
   "event_frequency": "All",
-  "modified": "2026-05-25 15:41:05.486191",
+  "modified": "2026-06-04 14:47:06.927989",
   "module": "Sabre Sales",
   "name": "validate-sabre-qualification-checklist",
   "rate_limit_count": 5,
   "rate_limit_seconds": 86400,
   "reference_doctype": "Sabre Qualification Checklist",
-  "script": "# التحقق من الحقول الأساسية\r\nif not doc.opportunity:\r\n    frappe.throw(\"يجب ربط Qualification بفرصة بيع\")\r\n\r\nif not doc.qualified:\r\n    frappe.throw(\"يجب تحديد نتيجة التأهيل\")\r\n\r\nif doc.qualified == \"No\" and not doc.reason_code:\r\n    frappe.throw(\"يجب إدخال سبب عدم التأهيل\")\r\n\r\nif doc.ttm_volume is None:\r\n    frappe.throw(\"يجب إدخال TTM Volume\")\r\n\r\nif doc.yoy_growth is None:\r\n    frappe.throw(\"يجب إدخال YOY Growth %\")\r\n\r\n# التحقق من مجموع Airline Mix\r\ntotal = (\r\n    (doc.ms_percentage or 0) +\r\n    (doc.sv_percentage or 0) +\r\n    (doc.ek_percentage or 0) +\r\n    (doc.np_percentage or 0) +\r\n    (doc.ne_percentage or 0) +\r\n    (doc.other_percentage or 0)\r\n)\r\n\r\nif total != 100:\r\n    frappe.throw(f\"مجموع Airline Mix = {total}% — يجب أن يكون 100% بالضبط\")",
+  "script": "# التحقق من الحقول الأساسية\r\nif not doc.opportunity:\r\n    frappe.throw(\"يجب ربط Qualification بفرصة بيع\")\r\n\r\nif not doc.qualified:\r\n    frappe.throw(\"يجب تحديد نتيجة التأهيل\")\r\n\r\nif doc.qualified == \"No\" and not doc.reason_code:\r\n    frappe.throw(\"يجب إدخال سبب عدم التأهيل\")\r\n\r\nif doc.ttm_volume is None:\r\n    frappe.throw(\"يجب إدخال TTM Volume\")\r\n\r\nif doc.yoy_growth is None:\r\n    frappe.throw(\"يجب إدخال YOY Growth %\")\r\n\r\n# # التحقق من مجموع Airline Mix\r\n# total = (\r\n#     (doc.ms_percentage or 0) +\r\n#     (doc.sv_percentage or 0) +\r\n#     (doc.ek_percentage or 0) +\r\n#     (doc.np_percentage or 0) +\r\n#     (doc.ne_percentage or 0) +\r\n#     (doc.other_percentage or 0)\r\n# )\r\n\r\n# if total != 100:\r\n#     frappe.throw(f\"مجموع Airline Mix = {total}% — يجب أن يكون 100% بالضبط\")",
   "script_type": "DocType Event"
  },
  {
