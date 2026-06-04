@@ -319,10 +319,3 @@ fixtures += [
         ]]]
     }
 ]
-
-fixtures += [
-    {
-        "doctype": "Notification",
-        "filters": [["module", "=", "Sabre Sales"]]
-    }
-]
