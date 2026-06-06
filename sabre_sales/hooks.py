@@ -62,7 +62,8 @@ app_license = "mit"
 # website user home page (by Role)
 role_home_page = {
     "Sabre Account Manager": "sabre-sales",
-    "Sabre Finance Manager": "sabre-sales"
+    "Sabre Finance Manager": "sabre-sales",
+    "Sabre Head Of Sales":"sabre-sales"
 }
 
 # Generators
@@ -305,7 +306,7 @@ fixtures += [
 fixtures += [
     {
         "doctype": "Role",
-        "filters": [["name", "in", ["Sabre Account Manager", "Sabre Finance Manager"]]]
+        "filters": [["name", "in", ["Sabre Account Manager", "Sabre Finance Manager", "Sabre Head Of Sales"]]]
     },
     {
         "doctype": "Custom DocPerm",

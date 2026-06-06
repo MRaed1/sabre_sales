@@ -1014,11 +1014,62 @@
   "is_virtual": 0,
   "issingle": 0,
   "istable": 0,
-  "links": [],
+  "links": [
+   {
+    "custom": 0,
+    "group": "Pre-Sales & Evaluation",
+    "hidden": 0,
+    "is_child_table": 0,
+    "link_doctype": "Sabre Qualification Checklist",
+    "link_fieldname": "opportunity",
+    "parent_doctype": null,
+    "table_fieldname": null
+   },
+   {
+    "custom": 0,
+    "group": "Pre-Sales & Evaluation",
+    "hidden": 0,
+    "is_child_table": 0,
+    "link_doctype": "Sabre Business Case",
+    "link_fieldname": "opportunity",
+    "parent_doctype": null,
+    "table_fieldname": null
+   },
+   {
+    "custom": 0,
+    "group": "Legal & Implementation",
+    "hidden": 0,
+    "is_child_table": 0,
+    "link_doctype": "Sabre Contract",
+    "link_fieldname": "opportunity",
+    "parent_doctype": null,
+    "table_fieldname": null
+   },
+   {
+    "custom": 0,
+    "group": "Legal & Implementation",
+    "hidden": 0,
+    "is_child_table": 0,
+    "link_doctype": "Sabre Implementation",
+    "link_fieldname": "opportunity",
+    "parent_doctype": null,
+    "table_fieldname": null
+   },
+   {
+    "custom": 0,
+    "group": "Legal & Implementation",
+    "hidden": 0,
+    "is_child_table": 0,
+    "link_doctype": "Sabre Go-Live",
+    "link_fieldname": "opportunity",
+    "parent_doctype": null,
+    "table_fieldname": null
+   }
+  ],
   "make_attachments_public": 0,
   "max_attachments": 0,
   "migration_hash": "74e346321d48586570f5fa4370f55629",
-  "modified": "2026-06-04 01:52:05.072134",
+  "modified": "2026-06-06 03:22:36.652943",
   "module": "Sabre Sales",
   "name": "Sabre Sales Opportunity",
   "naming_rule": "Expression",
