@@ -106,17 +106,17 @@
  {
   "amend": 0,
   "cancel": 0,
-  "create": 1,
+  "create": 0,
   "delete": 0,
   "docstatus": 0,
   "doctype": "Custom DocPerm",
   "email": 1,
   "export": 0,
-  "if_owner": 1,
+  "if_owner": 0,
   "impersonate": 0,
   "import": 0,
   "mask": 0,
-  "modified": "2026-06-07 11:20:34.632455",
+  "modified": "2026-06-08 01:26:12.498430",
   "name": "aea98phk2s",
   "parent": "Sabre Implementation",
   "permlevel": 0,
@@ -127,7 +127,7 @@
   "select": 1,
   "share": 1,
   "submit": 0,
-  "write": 1
+  "write": 0
  },
  {
   "amend": 0,
