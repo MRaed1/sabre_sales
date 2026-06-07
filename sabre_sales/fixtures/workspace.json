@@ -29,7 +29,7 @@
   "link_to": null,
   "link_type": "DocType",
   "links": [],
-  "modified": "2026-06-04 01:56:47.087018",
+  "modified": "2026-06-07 09:29:34.111127",
   "module": "Sabre Sales",
   "name": "Sabre Sales",
   "number_cards": [
@@ -64,6 +64,9 @@
    },
    {
     "role": "Sabre Finance Manager"
+   },
+   {
+    "role": "Sabre Head Of Sales"
    }
   ],
   "sequence_id": 0.0,
