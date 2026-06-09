@@ -320,3 +320,4 @@ fixtures += [
         ]]]
     }
 ]
+after_migrate = ["sabre_sales.setup.import_workspace"]
