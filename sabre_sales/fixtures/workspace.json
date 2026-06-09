@@ -16,12 +16,7 @@
    }
   ],
   "content": "[{\"id\":\"1I71qo2RF7\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Opportunities by Stage\",\"col\":12}},{\"id\":\"5f0KkXyj9L\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Opportunities by Type\",\"col\":6}},{\"id\":\"9LqQYvIr3G\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Pipeline Value by Month\",\"col\":6}},{\"id\":\"Uo7tpYXjlC\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Sabre Sales Opportunity\",\"col\":6}},{\"id\":\"RPoCirYEAn\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Sabre Qualification Checklist\",\"col\":6}},{\"id\":\"A5nZtv0Eau\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Sabre Business Case\",\"col\":6}},{\"id\":\"346DFMwaJ-\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Sabre Contract\",\"col\":6}},{\"id\":\"LWGCz72WzA\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Sabre Implementation\",\"col\":6}},{\"id\":\"4Ped7ROqOU\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Sabre Go-Live\",\"col\":6}},{\"id\":\"Z0JyfaY3Ya\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Total Opportunities\",\"col\":6}},{\"id\":\"f5sCNMPs-y\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"In Implementation\",\"col\":6}},{\"id\":\"gONXvHDDqk\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Won Opportunities\",\"col\":6}},{\"id\":\"4tfFRKXEMj\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Lost Opportunities\",\"col\":6}},{\"id\":\"qMJFXHzz2P\",\"type\":\"number_card\",\"data\":{\"number_card_name\":\"Total Pipeline Value\",\"col\":12}}]",
-  "custom_blocks": [
-   {
-    "custom_block_name": "Red Sparrow Logo",
-    "label": null
-   }
-  ],
+  "custom_blocks": [],
   "docstatus": 0,
   "doctype": "Workspace",
   "external_link": null,
