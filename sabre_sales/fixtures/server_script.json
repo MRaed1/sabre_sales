@@ -264,5 +264,24 @@
   "reference_doctype": "Sabre Implementation",
   "script": "if doc.status == \"Completed\" and doc.has_value_changed(\"status\"):\r\n    prev = doc.get_doc_before_save()\r\n    if prev and prev.status != \"Completed\":\r\n        if not frappe.db.exists(\"Sabre Go-Live\", {\"opportunity\": doc.opportunity}):\r\n            gl = frappe.new_doc(\"Sabre Go-Live\")\r\n            gl.opportunity = doc.opportunity\r\n            gl.customer = doc.customer\r\n            gl.pipeline_am = doc.pipeline_am\r\n            gl.status = \"Active\"\r\n            gl.go_live_date = frappe.utils.today()\r\n            gl.go_live_confirmed = 0\r\n            gl.follow_up_30_days = frappe.utils.add_days(frappe.utils.today(), 30)\r\n            gl.follow_up_60_days = frappe.utils.add_days(frappe.utils.today(), 60)\r\n            gl.follow_up_90_days = frappe.utils.add_days(frappe.utils.today(), 90)\r\n            if doc.pipeline_am:\r\n                gl.owner = doc.pipeline_am\r\n            gl.insert(ignore_permissions=True)\r\n            frappe.msgprint(f\"🚀 تم إنشاء مستند Go-Live <b>{gl.name}</b> تلقائياً.\")\r\n        else:\r\n            frappe.msgprint(f\"✅ مستند Go-Live موجود مسبقاً لهذه الفرصة.\")",
   "script_type": "DocType Event"
+ },
+ {
+  "allow_guest": 0,
+  "api_method": null,
+  "cron_format": null,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Server Script",
+  "doctype_event": "After Insert",
+  "enable_rate_limit": 0,
+  "event_frequency": "All",
+  "modified": "2026-06-15 16:25:25.006485",
+  "module": "Sabre Sales",
+  "name": "Linking Web Form with Event",
+  "rate_limit_count": 5,
+  "rate_limit_seconds": 86400,
+  "reference_doctype": "Interview Appointment",
+  "script": "# إنشاء Event تلقائي عند الحجز\r\nevent = frappe.get_doc({\r\n    \"doctype\": \"Event\",\r\n    \"subject\": f\"Interview - {doc.applicant_name}\",\r\n    \"starts_on\": f\"{doc.appointment_date} {doc.appointment_time}\",\r\n    \"event_type\": \"Public\",\r\n})\r\n\r\nevent.insert(ignore_permissions=True)",
+  "script_type": "DocType Event"
  }
 ]
