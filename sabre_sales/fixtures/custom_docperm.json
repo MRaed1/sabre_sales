@@ -12,7 +12,7 @@
   "impersonate": 0,
   "import": 0,
   "mask": 0,
-  "modified": "2026-06-07 11:20:21.287192",
+  "modified": "2026-06-23 15:34:55.252671",
   "name": "79sk8giq6b",
   "parent": "Sabre Sales Opportunity",
   "permlevel": 0,
@@ -106,7 +106,7 @@
  {
   "amend": 0,
   "cancel": 0,
-  "create": 0,
+  "create": 1,
   "delete": 0,
   "docstatus": 0,
   "doctype": "Custom DocPerm",
@@ -116,7 +116,7 @@
   "impersonate": 0,
   "import": 0,
   "mask": 0,
-  "modified": "2026-06-08 01:26:12.498430",
+  "modified": "2026-06-23 15:27:27.949603",
   "name": "aea98phk2s",
   "parent": "Sabre Implementation",
   "permlevel": 0,
@@ -127,7 +127,7 @@
   "select": 1,
   "share": 1,
   "submit": 0,
-  "write": 0
+  "write": 1
  },
  {
   "amend": 0,
