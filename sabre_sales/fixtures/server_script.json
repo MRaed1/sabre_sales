@@ -66,13 +66,13 @@
   "doctype_event": "Before Save",
   "enable_rate_limit": 0,
   "event_frequency": "All",
-  "modified": "2026-05-24 21:11:55.362744",
+  "modified": "2026-06-23 16:19:20.486159",
   "module": "Sabre Sales",
   "name": "validate-sabre-business-case",
   "rate_limit_count": 5,
   "rate_limit_seconds": 86400,
   "reference_doctype": "Sabre Business Case",
-  "script": "# التحقق من الحقول الأساسية\r\nif not doc.opportunity:\r\n    frappe.throw(\"يجب ربط Business Case بفرصة بيع\")\r\n\r\nif not doc.customer:\r\n    frappe.throw(\"يجب تحديد العميل\")\r\n\r\nif not doc.pipeline_am:\r\n    frappe.throw(\"يجب تحديد Pipeline AM\")\r\n\r\nif not doc.commercial_proposal:\r\n    frappe.throw(\"يجب إدخال Commercial Proposal\")\r\n\r\nif not doc.proposal_date:\r\n    frappe.throw(\"يجب تحديد تاريخ الاقتراح\")\r\n\r\n# التحقق من Notes عند الرفض\r\nif doc.status == \"Rejected\" and not doc.head_of_sales_notes:\r\n    frappe.throw(\"يجب إدخال سبب الرفض في Head of Sales Notes\")",
+  "script": "# التحقق من الحقول الأساسية\r\nif not doc.opportunity:\r\n    frappe.throw(\"يجب ربط Business Case بفرصة بيع\")\r\n\r\nif not doc.customer:\r\n    frappe.throw(\"يجب تحديد العميل\")\r\n\r\nif not doc.pipeline_am:\r\n    frappe.throw(\"يجب تحديد Pipeline AM\")\r\n\r\n# if not doc.commercial_proposal:\r\n#     frappe.throw(\"يجب إدخال Commercial Proposal\")\r\n\r\nif not doc.proposal_date:\r\n    frappe.throw(\"يجب تحديد تاريخ الاقتراح\")\r\n\r\n# التحقق من Notes عند الرفض\r\nif doc.status == \"Rejected\" and not doc.head_of_sales_notes:\r\n    frappe.throw(\"يجب إدخال سبب الرفض في Head of Sales Notes\")",
   "script_type": "DocType Event"
  },
  {
@@ -294,13 +294,13 @@
   "doctype_event": "After Save",
   "enable_rate_limit": 0,
   "event_frequency": "All",
-  "modified": "2026-06-23 10:38:54.620227",
+  "modified": "2026-06-24 13:40:19.443068",
   "module": "Sabre Sales",
   "name": "Sabre AM assignment",
   "rate_limit_count": 5,
   "rate_limit_seconds": 86400,
   "reference_doctype": "Sabre Sales Opportunity",
-  "script": "if doc.pipeline_am:\n    share = frappe.new_doc(\"DocShare\")\n    share.share_doctype = \"Sabre Sales Opportunity\"\n    share.share_name = doc.name\n    share.user = doc.pipeline_am\n    share.read = 1\n    share.write = 1\n    share.save(ignore_permissions=True)",
+  "script": "if doc.pipeline_am:\n    existing_share = frappe.db.exists(\"DocShare\", {\n        \"share_doctype\": \"Sabre Sales Opportunity\",\n        \"share_name\": doc.name,\n        \"user\": doc.pipeline_am\n    })\n    \n    if not existing_share:\n        share = frappe.new_doc(\"DocShare\")\n        share.share_doctype = \"Sabre Sales Opportunity\"\n        share.share_name = doc.name\n        share.user = doc.pipeline_am\n        share.read = 1\n        share.write = 1\n        share.share = 1\n        share.save(ignore_permissions=True)",
   "script_type": "DocType Event"
  }
 ]
