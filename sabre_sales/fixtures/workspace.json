@@ -11,7 +11,7 @@
     "label": "Pipeline Value by Month"
    }
   ],
-  "content": "[{\"id\":\"Fe3Hk5WJaT\",\"type\":\"custom_block\",\"data\":{\"custom_block_name\":\"Opportunities\",\"col\":7}},{\"id\":\"05fEVL8GFJ\",\"type\":\"custom_block\",\"data\":{\"custom_block_name\":\"opp by type\",\"col\":5}},{\"id\":\"9LqQYvIr3G\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Pipeline Value by Month\",\"col\":6}},{\"id\":\"b9g8MfFlZg\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Pipeline by AM\",\"col\":6}},{\"id\":\"Uo7tpYXjlC\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Sabre Sales Opportunity\",\"col\":6}},{\"id\":\"RPoCirYEAn\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Sabre Qualification Checklist\",\"col\":6}},{\"id\":\"A5nZtv0Eau\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Sabre Business Case\",\"col\":6}},{\"id\":\"346DFMwaJ-\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Sabre Contract\",\"col\":6}},{\"id\":\"LWGCz72WzA\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Sabre Implementation\",\"col\":6}},{\"id\":\"4Ped7ROqOU\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Sabre Go-Live\",\"col\":6}},{\"id\":\"QMQkkWvDWO\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"EG Pipeline Report\",\"col\":12}}]",
+  "content": "[{\"id\":\"Fe3Hk5WJaT\",\"type\":\"custom_block\",\"data\":{\"custom_block_name\":\"Opportunities\",\"col\":7}},{\"id\":\"05fEVL8GFJ\",\"type\":\"custom_block\",\"data\":{\"custom_block_name\":\"opp by type\",\"col\":5}},{\"id\":\"9LqQYvIr3G\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Pipeline Value by Month\",\"col\":6}},{\"id\":\"b9g8MfFlZg\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Pipeline by AM\",\"col\":6}},{\"id\":\"Uo7tpYXjlC\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Sabre Sales Opportunity\",\"col\":6}},{\"id\":\"RPoCirYEAn\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Sabre Qualification Checklist\",\"col\":6}},{\"id\":\"A5nZtv0Eau\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Sabre Business Case\",\"col\":6}},{\"id\":\"346DFMwaJ-\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Sabre Contract\",\"col\":6}},{\"id\":\"LWGCz72WzA\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Sabre Implementation\",\"col\":6}},{\"id\":\"4Ped7ROqOU\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Sabre Go-Live\",\"col\":6}}]",
   "custom_blocks": [
    {
     "custom_block_name": "opp by type",
@@ -34,7 +34,7 @@
   "link_to": null,
   "link_type": "DocType",
   "links": [],
-  "modified": "2026-06-28 12:24:38.068003",
+  "modified": "2026-06-29 15:28:08.407836",
   "module": "Sabre Sales",
   "name": "Sabre Sales",
   "number_cards": [],
@@ -58,20 +58,6 @@
   ],
   "sequence_id": 17.0,
   "shortcuts": [
-   {
-    "color": "Grey",
-    "doc_view": "List",
-    "format": null,
-    "icon": null,
-    "kanban_board": null,
-    "label": "EG Pipeline Report",
-    "link_to": "Sabre Sales Pipeline",
-    "report_ref_doctype": "Sabre Sales Opportunity",
-    "restrict_to_domain": null,
-    "stats_filter": null,
-    "type": "Report",
-    "url": null
-   },
    {
     "color": "Blue",
     "doc_view": "List",
