@@ -17,7 +17,7 @@ def import_workspace():
         if frappe.db.exists("Workspace", workspace["name"]):
             frappe.delete_doc("Workspace", workspace["name"], force=True)
         doc = frappe.get_doc(workspace)
-        doc.insert(ignore_permissions=True)
+        doc.insert(ignore_permissions=True, ignore_links=True)
     
     frappe.db.commit()
     print("Workspace imported successfully")
