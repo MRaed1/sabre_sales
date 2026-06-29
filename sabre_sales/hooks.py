@@ -322,6 +322,10 @@ fixtures += [
 ]
 fixtures += [
     {
+        "doctype": "Workspace Sidebar",
+        "filters": [["app", "=", "sabre_sales"]]
+    },
+    {
         "doctype": "Custom HTML Block",
         "filters": [["name", "in", ["opp by type", "Opportunities"]]]
     }
