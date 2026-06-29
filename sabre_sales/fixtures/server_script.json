@@ -302,5 +302,24 @@
   "reference_doctype": "Sabre Sales Opportunity",
   "script": "if doc.pipeline_am:\n    existing_share = frappe.db.exists(\"DocShare\", {\n        \"share_doctype\": \"Sabre Sales Opportunity\",\n        \"share_name\": doc.name,\n        \"user\": doc.pipeline_am\n    })\n    \n    if not existing_share:\n        share = frappe.new_doc(\"DocShare\")\n        share.share_doctype = \"Sabre Sales Opportunity\"\n        share.share_name = doc.name\n        share.user = doc.pipeline_am\n        share.read = 1\n        share.write = 1\n        share.share = 1\n        share.save(ignore_permissions=True)",
   "script_type": "DocType Event"
+ },
+ {
+  "allow_guest": 0,
+  "api_method": null,
+  "cron_format": null,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Server Script",
+  "doctype_event": "After Save",
+  "enable_rate_limit": 0,
+  "event_frequency": "All",
+  "modified": "2026-06-28 15:46:49.854869",
+  "module": "Sabre Sales",
+  "name": "Sabre CSM Assignment",
+  "rate_limit_count": 5,
+  "rate_limit_seconds": 86400,
+  "reference_doctype": "Sabre Sales Opportunity",
+  "script": "# Always clean up existing CSM team DocShares first\nold_members = frappe.get_all(\n    \"HD Team Member\",\n    filters={\"parent\": \"Sabre CSM Team\"},\n    pluck=\"user\"\n)\n\nfor member in old_members:\n    existing = frappe.db.exists(\"DocShare\", {\n        \"share_doctype\": \"Sabre Sales Opportunity\",\n        \"share_name\": doc.name,\n        \"user\": member\n    })\n    if existing:\n        frappe.delete_doc(\"DocShare\", existing, ignore_permissions=True)\n\n# Now assign if CSM team is selected\nif doc.assigned_to == \"Sabre CSM Team\":\n    team_members = frappe.get_all(\n        \"HD Team Member\",\n        filters={\"parent\": \"Sabre CSM Team\"},\n        pluck=\"user\"\n    )\n    \n    for member in team_members:\n        share = frappe.new_doc(\"DocShare\")\n        share.share_doctype = \"Sabre Sales Opportunity\"\n        share.share_name = doc.name\n        share.user = member\n        share.read = 1\n        share.write = 1\n        share.save(ignore_permissions=True)\n        \n        frappe.sendmail(\n            recipients=[member],\n            subject=f\"New Opportunity Assigned to CSM Team: {doc.name}\",\n            message=f\"Opportunity {doc.name} has been assigned to the CSM team by {frappe.session.user}.\"\n        )",
+  "script_type": "DocType Event"
  }
 ]
