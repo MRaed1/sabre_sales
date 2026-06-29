@@ -1,0 +1,59 @@
+[
+ {
+  "add_total_row": 0,
+  "add_translate_data": 0,
+  "columns": [],
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Report",
+  "filters": [
+   {
+    "default": null,
+    "fieldname": "from_date",
+    "fieldtype": "Date",
+    "label": "From Close Date",
+    "mandatory": 0,
+    "options": null,
+    "wildcard_filter": 0
+   },
+   {
+    "default": null,
+    "fieldname": "to_date",
+    "fieldtype": "Date",
+    "label": "To Close Date",
+    "mandatory": 0,
+    "options": null,
+    "wildcard_filter": 0
+   }
+  ],
+  "is_standard": "No",
+  "javascript": null,
+  "json": null,
+  "letter_head": null,
+  "modified": "2026-06-28 16:11:48.353614",
+  "module": "Sabre Sales",
+  "name": "Sabre Sales Pipeline",
+  "prepared_report": 0,
+  "query": null,
+  "ref_doctype": "Sabre Sales Opportunity",
+  "reference_report": null,
+  "report_name": "Sabre Sales Pipeline",
+  "report_script": "# 1. تعريف كافة أعمدة الشيت المراد عرضها\r\ncolumns = [\r\n    {\"label\": \"Type\", \"fieldname\": \"opportunity_type\", \"fieldtype\": \"Data\", \"width\": 140},\r\n    {\"label\": \"Opportunity Owner\", \"fieldname\": \"pipeline_am\", \"fieldtype\": \"Link\", \"options\": \"User\", \"width\": 160},\r\n    {\"label\": \"Account Name\", \"fieldname\": \"customer\", \"fieldtype\": \"Data\", \"width\": 180},\r\n    {\"label\": \"Opportunity Name\", \"fieldname\": \"name\", \"fieldtype\": \"Link\", \"options\": \"Sabre Sales Opportunity\", \"width\": 220},\r\n    {\"label\": \"Stage\", \"fieldname\": \"workflow_state\", \"fieldtype\": \"Data\", \"width\": 130},\r\n    {\"label\": \"Fiscal Period\", \"fieldname\": \"fiscal_period\", \"fieldtype\": \"Data\", \"width\": 110},\r\n    {\"label\": \"TOV\", \"fieldname\": \"opportunity_value\", \"fieldtype\": \"Currency\", \"width\": 100},\r\n    {\"label\": \"Weighted Total Opportunity Value (TOV)\", \"fieldname\": \"weighted_tov\", \"fieldtype\": \"Currency\", \"width\": 150},\r\n    {\"label\": \"Probability (%)\", \"fieldname\": \"probability\", \"fieldtype\": \"Percent\", \"width\": 110},\r\n    {\"label\": \"Age\", \"fieldname\": \"age\", \"fieldtype\": \"Int\", \"width\": 80},\r\n    {\"label\": \"Close Date\", \"fieldname\": \"close_date\", \"fieldtype\": \"Date\", \"width\": 110},\r\n    {\"label\": \"Created Date\", \"fieldname\": \"creation\", \"fieldtype\": \"Date\", \"width\": 110},\r\n    {\"label\": \"Next Step\", \"fieldname\": \"next_step\", \"fieldtype\": \"Data\", \"width\": 130},\r\n    {\"label\": \"Lead Source\", \"fieldname\": \"lead_source\", \"fieldtype\": \"Data\", \"width\": 120}\r\n]\r\n\r\n# 2. تجهيز أسماء الحقول المراد جلبها بأمان\r\ndoc_meta = frappe.get_meta(\"Sabre Sales Opportunity\")\r\navailable_fields = [df.fieldname for df in doc_meta.fields] + [\"name\", \"creation\"]\r\ndesired_fields = [\r\n    \"opportunity_type\", \"pipeline_am\", \"customer\", \"name\", \"workflow_state\",\r\n    \"fiscal_period\", \"opportunity_value\", \"weighted_tov\", \"probability\", \"age\", \r\n    \"creation\", \"next_step\", \"lead_source\"\r\n]\r\nfields_to_fetch = [f for f in desired_fields if f in available_fields]\r\n\r\n# جلب كافة الفرص أولاً لنقوم بفلترتها بناءً على تواريخها الخارجية\r\nall_opportunities = frappe.get_all(\"Sabre Sales Opportunity\", fields=fields_to_fetch)\r\n\r\n# 3. جلب خرائط التواريخ الخارجية من العقود والـ Go-Live وتحويلها لنصوص للمقارنة\r\ncontracts = frappe.get_all(\"Sabre Contract\", fields=[\"opportunity\", \"contract_date\"])\r\ncontracts_map = {c.opportunity: str(c.contract_date) for c in contracts if c.opportunity and c.contract_date}\r\n\r\ngolives = frappe.get_all(\"Sabre Go-Live\", fields=[\"opportunity\", \"go_live_date\"])\r\ngolives_map = {g.opportunity: str(g.go_live_date) for g in golives if g.opportunity and g.go_live_date}\r\n\r\nfrom_date = filters.get(\"from_date\")\r\nto_date = filters.get(\"to_date\")\r\n\r\n# 4. دمج التواريخ وتطبيق الفلترة الزمنية الذكية على Close Date\r\nfiltered_opportunities = []\r\nfor r in all_opportunities:\r\n    opp_name = r.get(\"name\")\r\n    # تحديد تاريخ الإغلاق (إما العقد أو التشغيل)\r\n    detected_close_date = contracts_map.get(opp_name) or golives_map.get(opp_name) or \"\"\r\n    r[\"close_date\"] = detected_close_date\r\n    \r\n    # منطق الفلترة: إذا وضع المستخدم تواريخ في الواجهة، نقارنها بـ Close Date المكتشف\r\n    keep_row = True\r\n    if from_date or to_date:\r\n        if detected_close_date:\r\n            if from_date and detected_close_date < str(from_date):\r\n                keep_row = False\r\n            if to_date and detected_close_date > str(to_date):\r\n                keep_row = False\r\n        else:\r\n            # إذا كان هناك فلتر نشط والفرصة ليس لها تاريخ إغلاق (عقد أو تشغيل)، يتم إخفاؤها\r\n            keep_row = False\r\n            \r\n    if keep_row:\r\n        filtered_opportunities.append(r)\r\n\r\n# 5. توزيع المجموعات بناءً على البيانات المفلترة الجديدة\r\nrenewal_rows = []\r\nconversion_rows = []\r\nmix_rows = []\r\nproduct_rows = []\r\nother_rows = []\r\n\r\nfor r in filtered_opportunities:\r\n    op_type = r.get(\"opportunity_type\")\r\n    if op_type == \"Renewal\":\r\n        renewal_rows.append(r)\r\n    elif op_type == \"Conversion\":\r\n        conversion_rows.append(r)\r\n    elif op_type == \"Mix\" or op_type == \"Mix / Conversion & Renewal\":\r\n        mix_rows.append(r)\r\n    elif op_type == \"Product\":\r\n        product_rows.append(r)\r\n    else:\r\n        other_rows.append(r)\r\n\r\nfinal_rows = []\r\ngroups_to_process = [\r\n    (\"Subtotal\", renewal_rows),\r\n    (\"Subtotal\", conversion_rows),\r\n    (\"Subtotal\", mix_rows),\r\n    (\"Subtotal\", product_rows),\r\n    (\"Subtotal\", other_rows)\r\n]\r\n\r\nfor item in groups_to_process:\r\n    label_name = item[0]\r\n    rows_list = item[1]\r\n    if len(rows_list) > 0:\r\n        subtotal_tov = 0\r\n        subtotal_weighted = 0\r\n        \r\n        for row in rows_list:\r\n            final_rows.append(row)\r\n            subtotal_tov += row.get(\"opportunity_value\") or 0\r\n            subtotal_weighted += row.get(\"weighted_tov\") or 0\r\n            \r\n        final_rows.append({\r\n            \"opportunity_type\": str(label_name),\r\n            \"pipeline_am\": \"Count\",\r\n            \"customer\": str(len(rows_list)),\r\n            \"name\": \"\", \"workflow_state\": \"\", \"fiscal_period\": \"\", \r\n            \"opportunity_value\": subtotal_tov,\r\n            \"weighted_tov\": subtotal_weighted, \r\n            \"probability\": \"\", \"age\": \"\", \"close_date\": \"\",\r\n            \"creation\": \"\", \"next_step\": \"\", \"lead_source\": \"\"\r\n        })\r\n\r\nif len(filtered_opportunities) > 0:\r\n    total_tov = sum(r.get(\"opportunity_value\") or 0 for r in filtered_opportunities)\r\n    total_weighted = sum(r.get(\"weighted_tov\") or 0 for r in filtered_opportunities)\r\n    \r\n    final_rows.append({\r\n        \"opportunity_type\": \"Total\",\r\n        \"pipeline_am\": \"Count\",\r\n        \"customer\": str(len(filtered_opportunities)),\r\n        \"name\": \"\", \"workflow_state\": \"\", \"fiscal_period\": \"\", \r\n        \"opportunity_value\": total_tov,\r\n        \"weighted_tov\": total_weighted, \r\n        \"probability\": \"\", \"age\": \"\", \"close_date\": \"\",\r\n        \"creation\": \"\", \"next_step\": \"\", \"lead_source\": \"\"\r\n    })\r\n\r\ndata = columns, final_rows",
+  "report_type": "Script Report",
+  "roles": [
+   {
+    "role": "Sabre Account Manager"
+   },
+   {
+    "role": "Sabre Finance Manager"
+   },
+   {
+    "role": "Sabre Head Of Sales"
+   },
+   {
+    "role": "System Manager"
+   }
+  ],
+  "timeout": 0
+ }
+]
