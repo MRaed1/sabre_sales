@@ -320,4 +320,10 @@ fixtures += [
         ]]]
     }
 ]
+fixtures += [
+    {
+        "doctype": "Custom HTML Block",
+        "filters": [["name", "in", ["opp by type", "Opportunities"]]]
+    }
+]
 after_migrate = ["sabre_sales.setup.import_workspace"]
