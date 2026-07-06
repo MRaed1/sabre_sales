@@ -270,10 +270,15 @@ fixtures = [
         "filters": [["document_type", "=", "Sabre Sales Opportunity"]]
     },
     {
-        "doctype": "Notification",
-        "filters": [["module", "=", "Sabre Sales"]]
-    }
-]
+    "doctype": "Notification",
+    "filters": [["document_type", "in", [
+        "Sabre Sales Opportunity",
+        "Sabre Go-Live",
+        "Sabre Business Case",
+        "Sabre Contract",
+        "Sabre Implementation"
+    ]]]
+}]
 
 fixtures += [
     {
