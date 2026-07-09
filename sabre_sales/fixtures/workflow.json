@@ -5,7 +5,7 @@
   "document_type": "Sabre Sales Opportunity",
   "enable_action_confirmation": 1,
   "is_active": 1,
-  "modified": "2026-07-06 15:05:50.051853",
+  "modified": "2026-07-09 12:20:36.261526",
   "name": "Sabre Sales Pipeline",
   "override_status": 0,
   "send_email_alert": 1,
@@ -95,7 +95,7 @@
     "workflow_builder_id": null
    },
    {
-    "allow_edit": "Sabre Finance Manager",
+    "allow_edit": "Sabre Account Manager",
     "avoid_status_override": 0,
     "doc_status": "0",
     "evaluate_as_expression": 0,
@@ -151,7 +151,7 @@
     "workflow_builder_id": null
    },
    {
-    "allow_edit": "Sabre Finance Manager",
+    "allow_edit": "Accounts Manager",
     "avoid_status_override": 0,
     "doc_status": "0",
     "evaluate_as_expression": 0,
@@ -165,7 +165,7 @@
     "workflow_builder_id": null
    },
    {
-    "allow_edit": "Sabre Finance Manager",
+    "allow_edit": "Accounts Manager",
     "avoid_status_override": 0,
     "doc_status": "0",
     "evaluate_as_expression": 0,
@@ -258,22 +258,22 @@
     "workflow_builder_id": null
    },
    {
-    "action": "Approve & Send for Signature",
+    "action": "Reject Contract (Send Back)",
     "allow_self_approval": 1,
     "allowed": "Sabre Head Of Sales",
     "condition": null,
-    "next_state": "Contract Signing",
+    "next_state": "Contract Preparation",
     "send_email_to_creator": 0,
     "state": "Contract Review",
     "transition_tasks": null,
     "workflow_builder_id": null
    },
    {
-    "action": "Reject Contract (Send Back)",
+    "action": "Approve & Send for Signature",
     "allow_self_approval": 1,
     "allowed": "Sabre Head Of Sales",
     "condition": null,
-    "next_state": "Contract Preparation",
+    "next_state": "Contract Signing",
     "send_email_to_creator": 0,
     "state": "Contract Review",
     "transition_tasks": null,
@@ -291,22 +291,22 @@
     "workflow_builder_id": null
    },
    {
-    "action": "Approve Signed Contract",
+    "action": "Reject Signed Contract",
     "allow_self_approval": 1,
     "allowed": "Sabre Head Of Sales",
     "condition": null,
-    "next_state": "Implementation",
+    "next_state": "Contract Signing",
     "send_email_to_creator": 0,
     "state": "Contract Signing Review",
     "transition_tasks": null,
     "workflow_builder_id": null
    },
    {
-    "action": "Reject Signed Contract",
+    "action": "Approve Signed Contract",
     "allow_self_approval": 1,
     "allowed": "Sabre Head Of Sales",
     "condition": null,
-    "next_state": "Contract Signing",
+    "next_state": "Implementation",
     "send_email_to_creator": 0,
     "state": "Contract Signing Review",
     "transition_tasks": null,
