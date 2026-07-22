@@ -75,5 +75,16 @@
   "name": "AM self Assignment",
   "script": "frappe.ui.form.on('Sabre Sales Opportunity', {\n    refresh: function(frm) {\n        \n        // 1. التحقق من أن المستخدم هو مدير حسابات (AM)\n        const is_account_manager = frappe.user_roles.includes('Sabre Account Manager');\n        \n        // 2. تحديد الأدوار التي تريد استثناءها تماماً من الملء التلقائي\n        const has_excluded_role = frappe.user_roles.includes('Head of Sales') || \n                                  frappe.user_roles.includes('System Manager') \n\n        // 3. الشرط: يجب أن يكون AM وليس لديه أي دور من الأدوار المستثناة\n        if (is_account_manager && !has_excluded_role) {\n            \n            // إذا كانت الفرصة جديدة، يتم ملء الحقل تلقائياً\n            if (frm.is_new()) {\n                frm.set_value('pipeline_am', frappe.session.user);\n            }\n            \n        }\n    }\n});",
   "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
+  "dt": "Sabre Sales Opportunity",
+  "enabled": 1,
+  "modified": "2026-07-20 16:29:49.206631",
+  "module": "Sabre Sales",
+  "name": "Opportunity MIDT Autofill",
+  "script": "frappe.ui.form.on('Sabre Sales Opportunity', {\n    refresh: function(frm) {\n        ['total_gds_volume', 'airline_mix', 'sabre_bookings', 'sabre_share',\n         'amadeus_bookings', 'travelport_bookings'].forEach(function(f) {\n            frm.set_df_property(f, 'read_only', 1);\n        });\n    },\n    customer: function(frm) {\n        if (!frm.doc.customer) return;\n        frappe.db.get_value('Sabre Agency', frm.doc.customer, 'iata').then(r => {\n            if (!r.message || !r.message.iata) {\n                frappe.msgprint('This agency has no IATA number.');\n                return;\n            }\n            frappe.call({\n                method: 'midt_agency_stats',\n                args: { iata: r.message.iata },\n                callback: function(res) {\n                    let d = res.message;\n                    frm.set_value('total_gds_volume', d.total_gds_volume);\n                    frm.set_value('airline_mix', d.airline_mix);\n                    frm.set_value('sabre_bookings', d.sabre_bookings);\n                    frm.set_value('sabre_share', d.sabre_share);\n                    frm.set_value('amadeus_bookings', d.amadeus_bookings);\n                    frm.set_value('travelport_bookings', d.travelport_bookings);\n                    frappe.show_alert('MIDT data loaded: ' + d.total_gds_volume + ' bookings, Sabre share ' + d.sabre_share + '%');\n                }\n            });\n        });\n    }\n});",
+  "view": "Form"
  }
 ]

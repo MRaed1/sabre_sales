@@ -34,7 +34,7 @@
   "link_to": null,
   "link_type": "DocType",
   "links": [],
-  "modified": "2026-07-08 21:33:44.603905",
+  "modified": "2026-07-20 15:49:48.706172",
   "module": "Sabre Sales",
   "name": "Sabre Sales",
   "number_cards": [],
@@ -139,6 +139,34 @@
     "report_ref_doctype": null,
     "restrict_to_domain": null,
     "stats_filter": "[]",
+    "type": "DocType",
+    "url": null
+   },
+   {
+    "color": null,
+    "doc_view": "",
+    "format": null,
+    "icon": null,
+    "kanban_board": null,
+    "label": "Sabre Agency",
+    "link_to": "Sabre Agency",
+    "report_ref_doctype": null,
+    "restrict_to_domain": null,
+    "stats_filter": null,
+    "type": "DocType",
+    "url": null
+   },
+   {
+    "color": null,
+    "doc_view": "",
+    "format": null,
+    "icon": null,
+    "kanban_board": null,
+    "label": "MIDT Record",
+    "link_to": "MIDT Record",
+    "report_ref_doctype": null,
+    "restrict_to_domain": null,
+    "stats_filter": null,
     "type": "DocType",
     "url": null
    }
