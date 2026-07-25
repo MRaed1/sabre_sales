@@ -5,7 +5,7 @@
   "document_type": "Sabre Sales Opportunity",
   "enable_action_confirmation": 1,
   "is_active": 1,
-  "modified": "2026-07-09 12:20:36.261526",
+  "modified": "2026-07-24 13:11:27.983592",
   "name": "Sabre Sales Pipeline",
   "override_status": 0,
   "send_email_alert": 1,
@@ -22,7 +22,7 @@
     "state": "Lead",
     "update_field": null,
     "update_value": null,
-    "workflow_builder_id": null
+    "workflow_builder_id": "1"
    },
    {
     "allow_edit": "Sabre Account Manager",
@@ -36,7 +36,7 @@
     "state": "Qualification",
     "update_field": null,
     "update_value": null,
-    "workflow_builder_id": null
+    "workflow_builder_id": "2"
    },
    {
     "allow_edit": "Sabre Account Manager",
@@ -50,7 +50,7 @@
     "state": "Business Case",
     "update_field": null,
     "update_value": null,
-    "workflow_builder_id": null
+    "workflow_builder_id": "3"
    },
    {
     "allow_edit": "Sabre Head Of Sales",
@@ -64,7 +64,7 @@
     "state": "Business Case Review",
     "update_field": null,
     "update_value": null,
-    "workflow_builder_id": null
+    "workflow_builder_id": "4"
    },
    {
     "allow_edit": "Sabre Account Manager",
@@ -78,7 +78,7 @@
     "state": "Contract Preparation",
     "update_field": null,
     "update_value": null,
-    "workflow_builder_id": null
+    "workflow_builder_id": "5"
    },
    {
     "allow_edit": "Sabre Head Of Sales",
@@ -92,7 +92,7 @@
     "state": "Contract Review",
     "update_field": null,
     "update_value": null,
-    "workflow_builder_id": null
+    "workflow_builder_id": "6"
    },
    {
     "allow_edit": "Sabre Account Manager",
@@ -106,7 +106,7 @@
     "state": "Contract Signing",
     "update_field": null,
     "update_value": null,
-    "workflow_builder_id": null
+    "workflow_builder_id": "7"
    },
    {
     "allow_edit": "Sabre Head Of Sales",
@@ -120,7 +120,7 @@
     "state": "Contract Signing Review",
     "update_field": null,
     "update_value": null,
-    "workflow_builder_id": null
+    "workflow_builder_id": "8"
    },
    {
     "allow_edit": "Sabre Account Manager",
@@ -134,7 +134,7 @@
     "state": "Implementation",
     "update_field": null,
     "update_value": null,
-    "workflow_builder_id": null
+    "workflow_builder_id": "9"
    },
    {
     "allow_edit": "Sabre Account Manager",
@@ -148,7 +148,7 @@
     "state": "Go-Live",
     "update_field": null,
     "update_value": null,
-    "workflow_builder_id": null
+    "workflow_builder_id": "10"
    },
    {
     "allow_edit": "Accounts Manager",
@@ -162,7 +162,7 @@
     "state": "Closed - Won",
     "update_field": "",
     "update_value": "",
-    "workflow_builder_id": null
+    "workflow_builder_id": "11"
    },
    {
     "allow_edit": "Accounts Manager",
@@ -176,7 +176,7 @@
     "state": "Closed - Lost",
     "update_field": "",
     "update_value": "",
-    "workflow_builder_id": null
+    "workflow_builder_id": "12"
    }
   ],
   "transitions": [
@@ -189,7 +189,7 @@
     "send_email_to_creator": 0,
     "state": "Lead",
     "transition_tasks": null,
-    "workflow_builder_id": null
+    "workflow_builder_id": "action-1"
    },
    {
     "action": "Mark Not Qualified",
@@ -200,7 +200,7 @@
     "send_email_to_creator": 0,
     "state": "Qualification",
     "transition_tasks": null,
-    "workflow_builder_id": null
+    "workflow_builder_id": "action-2"
    },
    {
     "action": "Submit Qualified",
@@ -211,7 +211,7 @@
     "send_email_to_creator": 0,
     "state": "Qualification",
     "transition_tasks": null,
-    "workflow_builder_id": null
+    "workflow_builder_id": "action-3"
    },
    {
     "action": "Request Business Case Review",
@@ -222,7 +222,7 @@
     "send_email_to_creator": 0,
     "state": "Business Case",
     "transition_tasks": null,
-    "workflow_builder_id": null
+    "workflow_builder_id": "action-4"
    },
    {
     "action": "Send Back to AM",
@@ -233,7 +233,7 @@
     "send_email_to_creator": 0,
     "state": "Business Case Review",
     "transition_tasks": null,
-    "workflow_builder_id": null
+    "workflow_builder_id": "action-5"
    },
    {
     "action": "Approve Business Case",
@@ -244,7 +244,7 @@
     "send_email_to_creator": 0,
     "state": "Business Case Review",
     "transition_tasks": null,
-    "workflow_builder_id": null
+    "workflow_builder_id": "action-6"
    },
    {
     "action": "Submit Contract for Review",
@@ -255,7 +255,7 @@
     "send_email_to_creator": 0,
     "state": "Contract Preparation",
     "transition_tasks": null,
-    "workflow_builder_id": null
+    "workflow_builder_id": "action-7"
    },
    {
     "action": "Reject Contract (Send Back)",
@@ -266,7 +266,7 @@
     "send_email_to_creator": 0,
     "state": "Contract Review",
     "transition_tasks": null,
-    "workflow_builder_id": null
+    "workflow_builder_id": "action-8"
    },
    {
     "action": "Approve & Send for Signature",
@@ -277,7 +277,7 @@
     "send_email_to_creator": 0,
     "state": "Contract Review",
     "transition_tasks": null,
-    "workflow_builder_id": null
+    "workflow_builder_id": "action-9"
    },
    {
     "action": "Sign Contract",
@@ -288,7 +288,7 @@
     "send_email_to_creator": 0,
     "state": "Contract Signing",
     "transition_tasks": null,
-    "workflow_builder_id": null
+    "workflow_builder_id": "action-10"
    },
    {
     "action": "Reject Signed Contract",
@@ -299,7 +299,7 @@
     "send_email_to_creator": 0,
     "state": "Contract Signing Review",
     "transition_tasks": null,
-    "workflow_builder_id": null
+    "workflow_builder_id": "action-11"
    },
    {
     "action": "Approve Signed Contract",
@@ -310,7 +310,7 @@
     "send_email_to_creator": 0,
     "state": "Contract Signing Review",
     "transition_tasks": null,
-    "workflow_builder_id": null
+    "workflow_builder_id": "action-12"
    },
    {
     "action": "Confirm Go-Live",
@@ -321,7 +321,7 @@
     "send_email_to_creator": 0,
     "state": "Implementation",
     "transition_tasks": null,
-    "workflow_builder_id": null
+    "workflow_builder_id": "action-13"
    },
    {
     "action": "Mark Won",
@@ -332,10 +332,10 @@
     "send_email_to_creator": 0,
     "state": "Go-Live",
     "transition_tasks": null,
-    "workflow_builder_id": null
+    "workflow_builder_id": "action-14"
    }
   ],
-  "workflow_data": null,
+  "workflow_data": "[{\"type\":\"state\",\"dimensions\":{\"width\":85,\"height\":53},\"handleBounds\":{\"source\":[{\"id\":\"top\",\"position\":\"top\",\"x\":38.9140625,\"y\":-11,\"width\":7,\"height\":7},{\"id\":\"right\",\"position\":\"right\",\"x\":88.8359375,\"y\":23,\"width\":7,\"height\":7},{\"id\":\"bottom\",\"position\":\"bottom\",\"x\":38.9140625,\"y\":57,\"width\":7,\"height\":7},{\"id\":\"left\",\"position\":\"left\",\"x\":-11,\"y\":23,\"width\":7,\"height\":7}]},\"computedPosition\":{\"x\":550,\"y\":100,\"z\":0},\"id\":\"1\",\"position\":{\"x\":550,\"y\":100}},{\"type\":\"state\",\"dimensions\":{\"width\":136,\"height\":53},\"handleBounds\":{\"source\":[{\"id\":\"top\",\"position\":\"top\",\"x\":64.6953125,\"y\":-11,\"width\":7,\"height\":7},{\"id\":\"right\",\"position\":\"right\",\"x\":140.3984375,\"y\":23,\"width\":7,\"height\":7},{\"id\":\"bottom\",\"position\":\"bottom\",\"x\":64.6953125,\"y\":57,\"width\":7,\"height\":7},{\"id\":\"left\",\"position\":\"left\",\"x\":-11,\"y\":23,\"width\":7,\"height\":7}]},\"computedPosition\":{\"x\":950,\"y\":100,\"z\":0},\"id\":\"2\",\"position\":{\"x\":950,\"y\":100}},{\"type\":\"state\",\"dimensions\":{\"width\":150,\"height\":53},\"handleBounds\":{\"source\":[{\"id\":\"top\",\"position\":\"top\",\"x\":71.46875,\"y\":-11,\"width\":7,\"height\":7},{\"id\":\"right\",\"position\":\"right\",\"x\":153.9453125,\"y\":23,\"width\":7,\"height\":7},{\"id\":\"bottom\",\"position\":\"bottom\",\"x\":71.46875,\"y\":57,\"width\":7,\"height\":7},{\"id\":\"left\",\"position\":\"left\",\"x\":-11,\"y\":23,\"width\":7,\"height\":7}]},\"computedPosition\":{\"x\":1350,\"y\":100,\"z\":0},\"id\":\"3\",\"position\":{\"x\":1350,\"y\":100}},{\"type\":\"state\",\"dimensions\":{\"width\":162,\"height\":74},\"handleBounds\":{\"source\":[{\"id\":\"top\",\"position\":\"top\",\"x\":77.5,\"y\":-11,\"width\":7,\"height\":7},{\"id\":\"right\",\"position\":\"right\",\"x\":166,\"y\":33.5,\"width\":7,\"height\":7},{\"id\":\"bottom\",\"position\":\"bottom\",\"x\":77.5,\"y\":78,\"width\":7,\"height\":7},{\"id\":\"left\",\"position\":\"left\",\"x\":-11,\"y\":33.5,\"width\":7,\"height\":7}]},\"computedPosition\":{\"x\":1750,\"y\":100,\"z\":0},\"id\":\"4\",\"position\":{\"x\":1750,\"y\":100}},{\"type\":\"state\",\"dimensions\":{\"width\":162,\"height\":74},\"handleBounds\":{\"source\":[{\"id\":\"top\",\"position\":\"top\",\"x\":77.5,\"y\":-11,\"width\":7,\"height\":7},{\"id\":\"right\",\"position\":\"right\",\"x\":166,\"y\":33.5,\"width\":7,\"height\":7},{\"id\":\"bottom\",\"position\":\"bottom\",\"x\":77.5,\"y\":78,\"width\":7,\"height\":7},{\"id\":\"left\",\"position\":\"left\",\"x\":-11,\"y\":33.5,\"width\":7,\"height\":7}]},\"computedPosition\":{\"x\":2150,\"y\":100,\"z\":0},\"id\":\"5\",\"position\":{\"x\":2150,\"y\":100}},{\"type\":\"state\",\"dimensions\":{\"width\":162,\"height\":53},\"handleBounds\":{\"source\":[{\"id\":\"top\",\"position\":\"top\",\"x\":77.4609375,\"y\":-11,\"width\":7,\"height\":7},{\"id\":\"right\",\"position\":\"right\",\"x\":165.9296875,\"y\":23,\"width\":7,\"height\":7},{\"id\":\"bottom\",\"position\":\"bottom\",\"x\":77.4609375,\"y\":57,\"width\":7,\"height\":7},{\"id\":\"left\",\"position\":\"left\",\"x\":-11,\"y\":23,\"width\":7,\"height\":7}]},\"computedPosition\":{\"x\":2550,\"y\":100,\"z\":0},\"id\":\"6\",\"position\":{\"x\":2550,\"y\":100}},{\"type\":\"state\",\"dimensions\":{\"width\":162,\"height\":74},\"handleBounds\":{\"source\":[{\"id\":\"top\",\"position\":\"top\",\"x\":77.5,\"y\":-11,\"width\":7,\"height\":7},{\"id\":\"right\",\"position\":\"right\",\"x\":166,\"y\":33.5,\"width\":7,\"height\":7},{\"id\":\"bottom\",\"position\":\"bottom\",\"x\":77.5,\"y\":78,\"width\":7,\"height\":7},{\"id\":\"left\",\"position\":\"left\",\"x\":-11,\"y\":33.5,\"width\":7,\"height\":7}]},\"computedPosition\":{\"x\":2950,\"y\":100,\"z\":0},\"id\":\"7\",\"position\":{\"x\":2950,\"y\":100}},{\"type\":\"state\",\"dimensions\":{\"width\":162,\"height\":74},\"handleBounds\":{\"source\":[{\"id\":\"top\",\"position\":\"top\",\"x\":77.5,\"y\":-11,\"width\":7,\"height\":7},{\"id\":\"right\",\"position\":\"right\",\"x\":166,\"y\":33.5,\"width\":7,\"height\":7},{\"id\":\"bottom\",\"position\":\"bottom\",\"x\":77.5,\"y\":78,\"width\":7,\"height\":7},{\"id\":\"left\",\"position\":\"left\",\"x\":-11,\"y\":33.5,\"width\":7,\"height\":7}]},\"computedPosition\":{\"x\":3350,\"y\":100,\"z\":0},\"id\":\"8\",\"position\":{\"x\":3350,\"y\":100}},{\"type\":\"state\",\"dimensions\":{\"width\":156,\"height\":53},\"handleBounds\":{\"source\":[{\"id\":\"top\",\"position\":\"top\",\"x\":74.4609375,\"y\":-11,\"width\":7,\"height\":7},{\"id\":\"right\",\"position\":\"right\",\"x\":159.9296875,\"y\":23,\"width\":7,\"height\":7},{\"id\":\"bottom\",\"position\":\"bottom\",\"x\":74.4609375,\"y\":57,\"width\":7,\"height\":7},{\"id\":\"left\",\"position\":\"left\",\"x\":-11,\"y\":23,\"width\":7,\"height\":7}]},\"computedPosition\":{\"x\":3750,\"y\":100,\"z\":0},\"id\":\"9\",\"position\":{\"x\":3750,\"y\":100}},{\"type\":\"state\",\"dimensions\":{\"width\":105,\"height\":53},\"handleBounds\":{\"source\":[{\"id\":\"top\",\"position\":\"top\",\"x\":48.984375,\"y\":-11,\"width\":7,\"height\":7},{\"id\":\"right\",\"position\":\"right\",\"x\":108.9765625,\"y\":23,\"width\":7,\"height\":7},{\"id\":\"bottom\",\"position\":\"bottom\",\"x\":48.984375,\"y\":57,\"width\":7,\"height\":7},{\"id\":\"left\",\"position\":\"left\",\"x\":-11,\"y\":23,\"width\":7,\"height\":7}]},\"computedPosition\":{\"x\":4150,\"y\":100,\"z\":0},\"id\":\"10\",\"position\":{\"x\":4150,\"y\":100}},{\"type\":\"state\",\"dimensions\":{\"width\":143,\"height\":53},\"handleBounds\":{\"source\":[{\"id\":\"top\",\"position\":\"top\",\"x\":67.90625,\"y\":-11,\"width\":7,\"height\":7},{\"id\":\"right\",\"position\":\"right\",\"x\":146.8125,\"y\":23,\"width\":7,\"height\":7},{\"id\":\"bottom\",\"position\":\"bottom\",\"x\":67.90625,\"y\":57,\"width\":7,\"height\":7},{\"id\":\"left\",\"position\":\"left\",\"x\":-11,\"y\":23,\"width\":7,\"height\":7}]},\"computedPosition\":{\"x\":4550,\"y\":100,\"z\":0},\"id\":\"11\",\"position\":{\"x\":4550,\"y\":100}},{\"type\":\"state\",\"dimensions\":{\"width\":142,\"height\":53},\"handleBounds\":{\"source\":[{\"id\":\"top\",\"position\":\"top\",\"x\":67.3203125,\"y\":-11,\"width\":7,\"height\":7},{\"id\":\"right\",\"position\":\"right\",\"x\":145.640625,\"y\":23,\"width\":7,\"height\":7},{\"id\":\"bottom\",\"position\":\"bottom\",\"x\":67.3203125,\"y\":57,\"width\":7,\"height\":7},{\"id\":\"left\",\"position\":\"left\",\"x\":-11,\"y\":23,\"width\":7,\"height\":7}]},\"computedPosition\":{\"x\":4950,\"y\":100,\"z\":0},\"id\":\"12\",\"position\":{\"x\":4950,\"y\":100}},{\"type\":\"action\",\"dimensions\":{\"width\":143,\"height\":33},\"handleBounds\":{\"source\":[{\"id\":\"top\",\"position\":\"top\",\"x\":68.4609375,\"y\":-2,\"width\":6,\"height\":6},{\"id\":\"right\",\"position\":\"right\",\"x\":138.921875,\"y\":13.5,\"width\":6,\"height\":6},{\"id\":\"bottom\",\"position\":\"bottom\",\"x\":68.4609375,\"y\":29,\"width\":6,\"height\":6},{\"id\":\"left\",\"position\":\"left\",\"x\":-2,\"y\":13.5,\"width\":6,\"height\":6}]},\"computedPosition\":{\"x\":800,\"y\":120,\"z\":0},\"id\":\"action-1\",\"position\":{\"x\":800,\"y\":120},\"data\":{\"from_id\":\"1\",\"to_id\":\"2\"}},{\"type\":\"action\",\"dimensions\":{\"width\":147,\"height\":33},\"handleBounds\":{\"source\":[{\"id\":\"top\",\"position\":\"top\",\"x\":70.578125,\"y\":-2,\"width\":6,\"height\":6},{\"id\":\"right\",\"position\":\"right\",\"x\":143.1640625,\"y\":13.5,\"width\":6,\"height\":6},{\"id\":\"bottom\",\"position\":\"bottom\",\"x\":70.578125,\"y\":29,\"width\":6,\"height\":6},{\"id\":\"left\",\"position\":\"left\",\"x\":-2,\"y\":13.5,\"width\":6,\"height\":6}]},\"computedPosition\":{\"x\":1200,\"y\":120,\"z\":0},\"id\":\"action-2\",\"position\":{\"x\":1200,\"y\":120},\"data\":{\"from_id\":\"2\",\"to_id\":\"12\"}},{\"type\":\"action\",\"dimensions\":{\"width\":133,\"height\":33},\"handleBounds\":{\"source\":[{\"id\":\"top\",\"position\":\"top\",\"x\":63.40625,\"y\":-2,\"width\":6,\"height\":6},{\"id\":\"right\",\"position\":\"right\",\"x\":128.8203125,\"y\":13.5,\"width\":6,\"height\":6},{\"id\":\"bottom\",\"position\":\"bottom\",\"x\":63.40625,\"y\":29,\"width\":6,\"height\":6},{\"id\":\"left\",\"position\":\"left\",\"x\":-2,\"y\":13.5,\"width\":6,\"height\":6}]},\"computedPosition\":{\"x\":1200,\"y\":120,\"z\":0},\"id\":\"action-3\",\"position\":{\"x\":1200,\"y\":120},\"data\":{\"from_id\":\"2\",\"to_id\":\"3\"}},{\"type\":\"action\",\"dimensions\":{\"width\":230,\"height\":33},\"handleBounds\":{\"source\":[{\"id\":\"top\",\"position\":\"top\",\"x\":112.0859375,\"y\":-2,\"width\":6,\"height\":6},{\"id\":\"right\",\"position\":\"right\",\"x\":226.1796875,\"y\":13.5,\"width\":6,\"height\":6},{\"id\":\"bottom\",\"position\":\"bottom\",\"x\":112.0859375,\"y\":29,\"width\":6,\"height\":6},{\"id\":\"left\",\"position\":\"left\",\"x\":-2,\"y\":13.5,\"width\":6,\"height\":6}]},\"computedPosition\":{\"x\":1600,\"y\":120,\"z\":0},\"id\":\"action-4\",\"position\":{\"x\":1600,\"y\":120},\"data\":{\"from_id\":\"3\",\"to_id\":\"4\"}},{\"type\":\"action\",\"dimensions\":{\"width\":137,\"height\":33},\"handleBounds\":{\"source\":[{\"id\":\"top\",\"position\":\"top\",\"x\":65.34375,\"y\":-2,\"width\":6,\"height\":6},{\"id\":\"right\",\"position\":\"right\",\"x\":132.6953125,\"y\":13.5,\"width\":6,\"height\":6},{\"id\":\"bottom\",\"position\":\"bottom\",\"x\":65.34375,\"y\":29,\"width\":6,\"height\":6},{\"id\":\"left\",\"position\":\"left\",\"x\":-2,\"y\":13.5,\"width\":6,\"height\":6}]},\"computedPosition\":{\"x\":2000,\"y\":120,\"z\":0},\"id\":\"action-5\",\"position\":{\"x\":2000,\"y\":120},\"data\":{\"from_id\":\"4\",\"to_id\":\"3\"}},{\"type\":\"action\",\"dimensions\":{\"width\":180,\"height\":33},\"handleBounds\":{\"source\":[{\"id\":\"top\",\"position\":\"top\",\"x\":86.9921875,\"y\":-2,\"width\":6,\"height\":6},{\"id\":\"right\",\"position\":\"right\",\"x\":175.9921875,\"y\":13.5,\"width\":6,\"height\":6},{\"id\":\"bottom\",\"position\":\"bottom\",\"x\":86.9921875,\"y\":29,\"width\":6,\"height\":6},{\"id\":\"left\",\"position\":\"left\",\"x\":-2,\"y\":13.5,\"width\":6,\"height\":6}]},\"computedPosition\":{\"x\":2000,\"y\":120,\"z\":0},\"id\":\"action-6\",\"position\":{\"x\":2000,\"y\":120},\"data\":{\"from_id\":\"4\",\"to_id\":\"5\"}},{\"type\":\"action\",\"dimensions\":{\"width\":205,\"height\":33},\"handleBounds\":{\"source\":[{\"id\":\"top\",\"position\":\"top\",\"x\":99.6796875,\"y\":-2,\"width\":6,\"height\":6},{\"id\":\"right\",\"position\":\"right\",\"x\":201.3671875,\"y\":13.5,\"width\":6,\"height\":6},{\"id\":\"bottom\",\"position\":\"bottom\",\"x\":99.6796875,\"y\":29,\"width\":6,\"height\":6},{\"id\":\"left\",\"position\":\"left\",\"x\":-2,\"y\":13.5,\"width\":6,\"height\":6}]},\"computedPosition\":{\"x\":2400,\"y\":120,\"z\":0},\"id\":\"action-7\",\"position\":{\"x\":2400,\"y\":120},\"data\":{\"from_id\":\"5\",\"to_id\":\"6\"}},{\"type\":\"action\",\"dimensions\":{\"width\":211,\"height\":33},\"handleBounds\":{\"source\":[{\"id\":\"top\",\"position\":\"top\",\"x\":102.5,\"y\":-2,\"width\":6,\"height\":6},{\"id\":\"right\",\"position\":\"right\",\"x\":207.0078125,\"y\":13.5,\"width\":6,\"height\":6},{\"id\":\"bottom\",\"position\":\"bottom\",\"x\":102.5,\"y\":29,\"width\":6,\"height\":6},{\"id\":\"left\",\"position\":\"left\",\"x\":-2,\"y\":13.5,\"width\":6,\"height\":6}]},\"computedPosition\":{\"x\":2800,\"y\":120,\"z\":0},\"id\":\"action-8\",\"position\":{\"x\":2800,\"y\":120},\"data\":{\"from_id\":\"6\",\"to_id\":\"5\"}},{\"type\":\"action\",\"dimensions\":{\"width\":220,\"height\":33},\"handleBounds\":{\"source\":[{\"id\":\"top\",\"position\":\"top\",\"x\":106.9453125,\"y\":-2,\"width\":6,\"height\":6},{\"id\":\"right\",\"position\":\"right\",\"x\":215.890625,\"y\":13.5,\"width\":6,\"height\":6},{\"id\":\"bottom\",\"position\":\"bottom\",\"x\":106.9453125,\"y\":29,\"width\":6,\"height\":6},{\"id\":\"left\",\"position\":\"left\",\"x\":-2,\"y\":13.5,\"width\":6,\"height\":6}]},\"computedPosition\":{\"x\":2800,\"y\":120,\"z\":0},\"id\":\"action-9\",\"position\":{\"x\":2800,\"y\":120},\"data\":{\"from_id\":\"6\",\"to_id\":\"7\"}},{\"type\":\"action\",\"dimensions\":{\"width\":114,\"height\":33},\"handleBounds\":{\"source\":[{\"id\":\"top\",\"position\":\"top\",\"x\":53.9140625,\"y\":-2,\"width\":6,\"height\":6},{\"id\":\"right\",\"position\":\"right\",\"x\":109.828125,\"y\":13.5,\"width\":6,\"height\":6},{\"id\":\"bottom\",\"position\":\"bottom\",\"x\":53.9140625,\"y\":29,\"width\":6,\"height\":6},{\"id\":\"left\",\"position\":\"left\",\"x\":-2,\"y\":13.5,\"width\":6,\"height\":6}]},\"computedPosition\":{\"x\":3200,\"y\":120,\"z\":0},\"id\":\"action-10\",\"position\":{\"x\":3200,\"y\":120},\"data\":{\"from_id\":\"7\",\"to_id\":\"8\"}},{\"type\":\"action\",\"dimensions\":{\"width\":176,\"height\":33},\"handleBounds\":{\"source\":[{\"id\":\"top\",\"position\":\"top\",\"x\":85.1484375,\"y\":-2,\"width\":6,\"height\":6},{\"id\":\"right\",\"position\":\"right\",\"x\":172.296875,\"y\":13.5,\"width\":6,\"height\":6},{\"id\":\"bottom\",\"position\":\"bottom\",\"x\":85.1484375,\"y\":29,\"width\":6,\"height\":6},{\"id\":\"left\",\"position\":\"left\",\"x\":-2,\"y\":13.5,\"width\":6,\"height\":6}]},\"computedPosition\":{\"x\":3600,\"y\":120,\"z\":0},\"id\":\"action-11\",\"position\":{\"x\":3600,\"y\":120},\"data\":{\"from_id\":\"8\",\"to_id\":\"7\"}},{\"type\":\"action\",\"dimensions\":{\"width\":191,\"height\":33},\"handleBounds\":{\"source\":[{\"id\":\"top\",\"position\":\"top\",\"x\":92.328125,\"y\":-2,\"width\":6,\"height\":6},{\"id\":\"right\",\"position\":\"right\",\"x\":186.65625,\"y\":13.5,\"width\":6,\"height\":6},{\"id\":\"bottom\",\"position\":\"bottom\",\"x\":92.328125,\"y\":29,\"width\":6,\"height\":6},{\"id\":\"left\",\"position\":\"left\",\"x\":-2,\"y\":13.5,\"width\":6,\"height\":6}]},\"computedPosition\":{\"x\":3600,\"y\":120,\"z\":0},\"id\":\"action-12\",\"position\":{\"x\":3600,\"y\":120},\"data\":{\"from_id\":\"8\",\"to_id\":\"9\"}},{\"type\":\"action\",\"dimensions\":{\"width\":133,\"height\":33},\"handleBounds\":{\"source\":[{\"id\":\"top\",\"position\":\"top\",\"x\":63.3125,\"y\":-2,\"width\":6,\"height\":6},{\"id\":\"right\",\"position\":\"right\",\"x\":128.6328125,\"y\":13.5,\"width\":6,\"height\":6},{\"id\":\"bottom\",\"position\":\"bottom\",\"x\":63.3125,\"y\":29,\"width\":6,\"height\":6},{\"id\":\"left\",\"position\":\"left\",\"x\":-2,\"y\":13.5,\"width\":6,\"height\":6}]},\"computedPosition\":{\"x\":4000,\"y\":120,\"z\":0},\"id\":\"action-13\",\"position\":{\"x\":4000,\"y\":120},\"data\":{\"from_id\":\"9\",\"to_id\":\"10\"}},{\"type\":\"action\",\"dimensions\":{\"width\":90,\"height\":33},\"handleBounds\":{\"source\":[{\"id\":\"top\",\"position\":\"top\",\"x\":41.8515625,\"y\":-2,\"width\":6,\"height\":6},{\"id\":\"right\",\"position\":\"right\",\"x\":85.703125,\"y\":13.5,\"width\":6,\"height\":6},{\"id\":\"bottom\",\"position\":\"bottom\",\"x\":41.8515625,\"y\":29,\"width\":6,\"height\":6},{\"id\":\"left\",\"position\":\"left\",\"x\":-2,\"y\":13.5,\"width\":6,\"height\":6}]},\"computedPosition\":{\"x\":4400,\"y\":120,\"z\":0},\"id\":\"action-14\",\"position\":{\"x\":4400,\"y\":120},\"data\":{\"from_id\":\"10\",\"to_id\":\"11\"}},{\"sourceHandle\":\"right\",\"targetHandle\":\"left\",\"type\":\"transition\",\"source\":\"1\",\"target\":\"action-1\",\"updatable\":true,\"id\":\"edge-1-action-1\",\"animated\":true,\"sourceX\":645.8359375,\"sourceY\":126.5,\"targetX\":798,\"targetY\":136.5},{\"sourceHandle\":\"right\",\"targetHandle\":\"left\",\"type\":\"transition\",\"source\":\"action-1\",\"target\":\"2\",\"updatable\":true,\"id\":\"edge-action-1-2\",\"animated\":true,\"sourceX\":944.921875,\"sourceY\":136.5,\"targetX\":939,\"targetY\":126.5,\"markerEnd\":{\"type\":\"arrow\",\"width\":15,\"height\":15,\"strokeWidth\":1.5,\"color\":\"#687178\"}},{\"sourceHandle\":\"right\",\"targetHandle\":\"left\",\"type\":\"transition\",\"source\":\"2\",\"target\":\"action-2\",\"updatable\":true,\"id\":\"edge-2-action-2\",\"animated\":true,\"sourceX\":1097.3984375,\"sourceY\":126.5,\"targetX\":1198,\"targetY\":136.5},{\"sourceHandle\":\"right\",\"targetHandle\":\"left\",\"type\":\"transition\",\"source\":\"action-2\",\"target\":\"12\",\"updatable\":true,\"id\":\"edge-action-2-12\",\"animated\":true,\"sourceX\":1349.1640625,\"sourceY\":136.5,\"targetX\":4939,\"targetY\":126.5,\"markerEnd\":{\"type\":\"arrow\",\"width\":15,\"height\":15,\"strokeWidth\":1.5,\"color\":\"#687178\"}},{\"sourceHandle\":\"right\",\"targetHandle\":\"left\",\"type\":\"transition\",\"source\":\"2\",\"target\":\"action-3\",\"updatable\":true,\"id\":\"edge-2-action-3\",\"animated\":true,\"sourceX\":1097.3984375,\"sourceY\":126.5,\"targetX\":1198,\"targetY\":136.5},{\"sourceHandle\":\"right\",\"targetHandle\":\"left\",\"type\":\"transition\",\"source\":\"action-3\",\"target\":\"3\",\"updatable\":true,\"id\":\"edge-action-3-3\",\"animated\":true,\"sourceX\":1334.8203125,\"sourceY\":136.5,\"targetX\":1339,\"targetY\":126.5,\"markerEnd\":{\"type\":\"arrow\",\"width\":15,\"height\":15,\"strokeWidth\":1.5,\"color\":\"#687178\"}},{\"sourceHandle\":\"right\",\"targetHandle\":\"left\",\"type\":\"transition\",\"source\":\"3\",\"target\":\"action-4\",\"updatable\":true,\"id\":\"edge-3-action-4\",\"animated\":true,\"sourceX\":1510.9453125,\"sourceY\":126.5,\"targetX\":1598,\"targetY\":136.5},{\"sourceHandle\":\"right\",\"targetHandle\":\"left\",\"type\":\"transition\",\"source\":\"action-4\",\"target\":\"4\",\"updatable\":true,\"id\":\"edge-action-4-4\",\"animated\":true,\"sourceX\":1832.1796875,\"sourceY\":136.5,\"targetX\":1739,\"targetY\":137,\"markerEnd\":{\"type\":\"arrow\",\"width\":15,\"height\":15,\"strokeWidth\":1.5,\"color\":\"#687178\"}},{\"sourceHandle\":\"right\",\"targetHandle\":\"left\",\"type\":\"transition\",\"source\":\"4\",\"target\":\"action-5\",\"updatable\":true,\"id\":\"edge-4-action-5\",\"animated\":true,\"sourceX\":1923,\"sourceY\":137,\"targetX\":1998,\"targetY\":136.5},{\"sourceHandle\":\"right\",\"targetHandle\":\"left\",\"type\":\"transition\",\"source\":\"action-5\",\"target\":\"3\",\"updatable\":true,\"id\":\"edge-action-5-3\",\"animated\":true,\"sourceX\":2138.6953125,\"sourceY\":136.5,\"targetX\":1339,\"targetY\":126.5,\"markerEnd\":{\"type\":\"arrow\",\"width\":15,\"height\":15,\"strokeWidth\":1.5,\"color\":\"#687178\"}},{\"sourceHandle\":\"right\",\"targetHandle\":\"left\",\"type\":\"transition\",\"source\":\"4\",\"target\":\"action-6\",\"updatable\":true,\"id\":\"edge-4-action-6\",\"animated\":true,\"sourceX\":1923,\"sourceY\":137,\"targetX\":1998,\"targetY\":136.5},{\"sourceHandle\":\"right\",\"targetHandle\":\"left\",\"type\":\"transition\",\"source\":\"action-6\",\"target\":\"5\",\"updatable\":true,\"id\":\"edge-action-6-5\",\"animated\":true,\"sourceX\":2181.9921875,\"sourceY\":136.5,\"targetX\":2139,\"targetY\":137,\"markerEnd\":{\"type\":\"arrow\",\"width\":15,\"height\":15,\"strokeWidth\":1.5,\"color\":\"#687178\"}},{\"sourceHandle\":\"right\",\"targetHandle\":\"left\",\"type\":\"transition\",\"source\":\"5\",\"target\":\"action-7\",\"updatable\":true,\"id\":\"edge-5-action-7\",\"animated\":true,\"sourceX\":2323,\"sourceY\":137,\"targetX\":2398,\"targetY\":136.5},{\"sourceHandle\":\"right\",\"targetHandle\":\"left\",\"type\":\"transition\",\"source\":\"action-7\",\"target\":\"6\",\"updatable\":true,\"id\":\"edge-action-7-6\",\"animated\":true,\"sourceX\":2607.3671875,\"sourceY\":136.5,\"targetX\":2539,\"targetY\":126.5,\"markerEnd\":{\"type\":\"arrow\",\"width\":15,\"height\":15,\"strokeWidth\":1.5,\"color\":\"#687178\"}},{\"sourceHandle\":\"right\",\"targetHandle\":\"left\",\"type\":\"transition\",\"source\":\"6\",\"target\":\"action-8\",\"updatable\":true,\"id\":\"edge-6-action-8\",\"animated\":true,\"sourceX\":2722.9296875,\"sourceY\":126.5,\"targetX\":2798,\"targetY\":136.5},{\"sourceHandle\":\"right\",\"targetHandle\":\"left\",\"type\":\"transition\",\"source\":\"action-8\",\"target\":\"5\",\"updatable\":true,\"id\":\"edge-action-8-5\",\"animated\":true,\"sourceX\":3013.0078125,\"sourceY\":136.5,\"targetX\":2139,\"targetY\":137,\"markerEnd\":{\"type\":\"arrow\",\"width\":15,\"height\":15,\"strokeWidth\":1.5,\"color\":\"#687178\"}},{\"sourceHandle\":\"right\",\"targetHandle\":\"left\",\"type\":\"transition\",\"source\":\"6\",\"target\":\"action-9\",\"updatable\":true,\"id\":\"edge-6-action-9\",\"animated\":true,\"sourceX\":2722.9296875,\"sourceY\":126.5,\"targetX\":2798,\"targetY\":136.5},{\"sourceHandle\":\"right\",\"targetHandle\":\"left\",\"type\":\"transition\",\"source\":\"action-9\",\"target\":\"7\",\"updatable\":true,\"id\":\"edge-action-9-7\",\"animated\":true,\"sourceX\":3021.890625,\"sourceY\":136.5,\"targetX\":2939,\"targetY\":137,\"markerEnd\":{\"type\":\"arrow\",\"width\":15,\"height\":15,\"strokeWidth\":1.5,\"color\":\"#687178\"}},{\"sourceHandle\":\"right\",\"targetHandle\":\"left\",\"type\":\"transition\",\"source\":\"7\",\"target\":\"action-10\",\"updatable\":true,\"id\":\"edge-7-action-10\",\"animated\":true,\"sourceX\":3123,\"sourceY\":137,\"targetX\":3198,\"targetY\":136.5},{\"sourceHandle\":\"right\",\"targetHandle\":\"left\",\"type\":\"transition\",\"source\":\"action-10\",\"target\":\"8\",\"updatable\":true,\"id\":\"edge-action-10-8\",\"animated\":true,\"sourceX\":3315.828125,\"sourceY\":136.5,\"targetX\":3339,\"targetY\":137,\"markerEnd\":{\"type\":\"arrow\",\"width\":15,\"height\":15,\"strokeWidth\":1.5,\"color\":\"#687178\"}},{\"sourceHandle\":\"right\",\"targetHandle\":\"left\",\"type\":\"transition\",\"source\":\"8\",\"target\":\"action-11\",\"updatable\":true,\"id\":\"edge-8-action-11\",\"animated\":true,\"sourceX\":3523,\"sourceY\":137,\"targetX\":3598,\"targetY\":136.5},{\"sourceHandle\":\"right\",\"targetHandle\":\"left\",\"type\":\"transition\",\"source\":\"action-11\",\"target\":\"7\",\"updatable\":true,\"id\":\"edge-action-11-7\",\"animated\":true,\"sourceX\":3778.296875,\"sourceY\":136.5,\"targetX\":2939,\"targetY\":137,\"markerEnd\":{\"type\":\"arrow\",\"width\":15,\"height\":15,\"strokeWidth\":1.5,\"color\":\"#687178\"}},{\"sourceHandle\":\"right\",\"targetHandle\":\"left\",\"type\":\"transition\",\"source\":\"8\",\"target\":\"action-12\",\"updatable\":true,\"id\":\"edge-8-action-12\",\"animated\":true,\"sourceX\":3523,\"sourceY\":137,\"targetX\":3598,\"targetY\":136.5},{\"sourceHandle\":\"right\",\"targetHandle\":\"left\",\"type\":\"transition\",\"source\":\"action-12\",\"target\":\"9\",\"updatable\":true,\"id\":\"edge-action-12-9\",\"animated\":true,\"sourceX\":3792.65625,\"sourceY\":136.5,\"targetX\":3739,\"targetY\":126.5,\"markerEnd\":{\"type\":\"arrow\",\"width\":15,\"height\":15,\"strokeWidth\":1.5,\"color\":\"#687178\"}},{\"sourceHandle\":\"right\",\"targetHandle\":\"left\",\"type\":\"transition\",\"source\":\"9\",\"target\":\"action-13\",\"updatable\":true,\"id\":\"edge-9-action-13\",\"animated\":true,\"sourceX\":3916.9296875,\"sourceY\":126.5,\"targetX\":3998,\"targetY\":136.5},{\"sourceHandle\":\"right\",\"targetHandle\":\"left\",\"type\":\"transition\",\"source\":\"action-13\",\"target\":\"10\",\"updatable\":true,\"id\":\"edge-action-13-10\",\"animated\":true,\"sourceX\":4134.6328125,\"sourceY\":136.5,\"targetX\":4139,\"targetY\":126.5,\"markerEnd\":{\"type\":\"arrow\",\"width\":15,\"height\":15,\"strokeWidth\":1.5,\"color\":\"#687178\"}},{\"sourceHandle\":\"right\",\"targetHandle\":\"left\",\"type\":\"transition\",\"source\":\"10\",\"target\":\"action-14\",\"updatable\":true,\"id\":\"edge-10-action-14\",\"animated\":true,\"sourceX\":4265.9765625,\"sourceY\":126.5,\"targetX\":4398,\"targetY\":136.5},{\"sourceHandle\":\"right\",\"targetHandle\":\"left\",\"type\":\"transition\",\"source\":\"action-14\",\"target\":\"11\",\"updatable\":true,\"id\":\"edge-action-14-11\",\"animated\":true,\"sourceX\":4491.703125,\"sourceY\":136.5,\"targetX\":4539,\"targetY\":126.5,\"markerEnd\":{\"type\":\"arrow\",\"width\":15,\"height\":15,\"strokeWidth\":1.5,\"color\":\"#687178\"}}]",
   "workflow_name": "Sabre Sales Pipeline",
   "workflow_state_field": "workflow_state"
  }
