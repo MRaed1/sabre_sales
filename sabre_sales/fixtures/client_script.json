@@ -114,10 +114,10 @@
   "doctype": "Client Script",
   "dt": "Sabre Business Case",
   "enabled": 1,
-  "modified": "2026-07-25 11:12:10.176030",
+  "modified": "2026-07-27 11:40:22.355293",
   "module": "Sabre Sales",
   "name": "BC Deal Review Sheet",
-  "script": "frappe.ui.form.on('Sabre Business Case', {\n    refresh: function(frm) {\n        if (frm.is_new()) return;\n        if (frm.doc.deal_review_link) {\n            frm.add_custom_button(' Open Deal Review Sheet', function() {\n                window.open(frm.doc.deal_review_link, '_blank');\n            }).addClass('btn-primary');\n        }\n    }\n});",
+  "script": "frappe.ui.form.on('Sabre Business Case', {\n    refresh: function(frm) {\n        if (frm.is_new()) return;\n\n        if (frm.doc.deal_review_link) {\n            frm.add_custom_button('📊 Open Deal Review Sheet', function() {\n                window.open(frm.doc.deal_review_link, '_blank');\n            }).addClass('btn-primary');\n        } else {\n            frm.add_custom_button('📊 Link Deal Review Sheet', function() {\n                frappe.prompt(\n                    [{\n                        label: 'SharePoint / OneDrive link',\n                        fieldname: 'link',\n                        fieldtype: 'Data',\n                        reqd: 1,\n                        description: 'Copy the template, share it with the Head of Sales, then paste the link here'\n                    }],\n                    function(values) {\n                        frm.set_value('deal_review_link', values.link);\n                        frm.save().then(() => {\n                            frappe.show_alert('Deal review sheet linked');\n                            frm.refresh();\n                        });\n                    },\n                    'Link Deal Review Sheet', 'Save'\n                );\n            });\n        }\n    }\n});",
   "view": "Form"
  }
 ]

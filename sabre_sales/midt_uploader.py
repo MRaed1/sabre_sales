@@ -46,10 +46,10 @@ def import_midt(upload_name):
         for m in months:
             frappe.db.sql("DELETE FROM `tabMIDT Record` WHERE month = %s", m)
 
-        start = frappe.db.sql("""
+        start = int(frappe.db.sql("""
             SELECT IFNULL(MAX(CAST(SUBSTRING(name, 6) AS UNSIGNED)), 0)
             FROM `tabMIDT Record` WHERE name LIKE 'MIDT-%'
-        """)[0][0]
+        """)[0][0])
 
         ts = now()
         user = frappe.session.user
@@ -72,17 +72,66 @@ def import_midt(upload_name):
                 description=str(min((ci + 1) * chunk, len(values))) + ' of ' + str(len(values)) + ' records'
             )
 
+        new_agencies = _sync_agencies()
+
         month_list = ', '.join(sorted(months))
-        upload.db_set('status', 'Imported')
-        upload.db_set('records_imported', len(values))
-        upload.db_set('import_log', 'Imported ' + str(len(values)) + ' rows for months: ' + month_list)
+        frappe.db.set_value('MIDT Upload', upload_name, {
+            'status': 'Imported',
+            'records_imported': len(values),
+            'import_log': 'Imported ' + str(len(values)) + ' rows for months: ' +
+                          month_list + ' | New agencies created: ' + str(new_agencies),
+        }, update_modified=False)
         frappe.db.commit()
 
-        return {'ok': True, 'records': len(values), 'months': sorted(months)}
+        return {'ok': True, 'records': len(values), 'months': sorted(months),
+                'new_agencies': new_agencies}
 
     except Exception as e:
         frappe.db.rollback()
-        upload.db_set('status', 'Failed')
-        upload.db_set('import_log', str(e)[:500])
+        frappe.db.set_value('MIDT Upload', upload_name, {
+            'status': 'Failed',
+            'import_log': str(e)[:500],
+        }, update_modified=False)
         frappe.db.commit()
         raise
+
+
+def _sync_agencies():
+    """Create Sabre Agency records for any IATA present in MIDT but not yet an agency.
+    Runs after every import so new agencies appear automatically each month."""
+    rows = frappe.db.sql("""
+        SELECT iata,
+               (SELECT r3.iata_name FROM `tabMIDT Record` r3
+                WHERE r3.iata = r.iata AND r3.iata_name IS NOT NULL
+                  AND r3.iata_name NOT IN ('-', 'Overall')
+                GROUP BY r3.iata_name ORDER BY SUM(r3.total_bookings) DESC LIMIT 1) AS iata_name,
+               (SELECT r2.pcc FROM `tabMIDT Record` r2
+                WHERE r2.iata = r.iata
+                GROUP BY r2.pcc ORDER BY SUM(r2.total_bookings) DESC LIMIT 1) AS main_pcc
+        FROM `tabMIDT Record` r
+        WHERE iata IS NOT NULL AND iata != ''
+          AND iata_name IS NOT NULL AND iata_name NOT IN ('-', 'Overall')
+        GROUP BY iata
+    """, as_dict=True)
+
+    existing = set(x[0] for x in frappe.db.sql("SELECT iata FROM `tabSabre Agency`"))
+    used_names = set(x[0] for x in frappe.db.sql("SELECT name FROM `tabSabre Agency`"))
+
+    ts = now()
+    user = frappe.session.user
+    fields = ['name', 'owner', 'creation', 'modified', 'modified_by', 'docstatus', 'idx',
+              'agency_name', 'iata', 'pcc', 'current_gds']
+    values = []
+    for a in rows:
+        if a.iata in existing:
+            continue
+        name = (a.iata_name or a.iata).strip()[:130]
+        if name in used_names:
+            name = name + ' - ' + a.iata
+        used_names.add(name)
+        values.append((name, user, ts, ts, user, 0, 0,
+                       name, a.iata, a.main_pcc or '', ''))
+
+    if values:
+        frappe.db.bulk_insert('Sabre Agency', fields, values, chunk_size=1000)
+    return len(values)

@@ -57,7 +57,7 @@
   "docstatus": 0,
   "doctype": "Notification",
   "document_type": "Sabre Business Case",
-  "enabled": 0,
+  "enabled": 1,
   "event": "Save",
   "filters": null,
   "from_attach_field": null,
@@ -76,8 +76,8 @@
     "bcc": null,
     "cc": null,
     "condition": null,
-    "receiver_by_document_field": null,
-    "receiver_by_role": "Sabre Account Manager"
+    "receiver_by_document_field": "pipeline_am",
+    "receiver_by_role": ""
    }
   ],
   "send_system_notification": 1,
@@ -122,7 +122,7 @@
     "cc": null,
     "condition": null,
     "receiver_by_document_field": null,
-    "receiver_by_role": "Sabre Finance"
+    "receiver_by_role": "Sabre Finance Manager"
    }
   ],
   "send_system_notification": 1,
@@ -166,8 +166,8 @@
     "bcc": null,
     "cc": null,
     "condition": null,
-    "receiver_by_document_field": null,
-    "receiver_by_role": "Sabre Account Manager"
+    "receiver_by_document_field": "pipeline_am",
+    "receiver_by_role": ""
    }
   ],
   "send_system_notification": 1,
@@ -197,13 +197,13 @@
   "filters": null,
   "from_attach_field": null,
   "is_standard": 0,
-  "message": "<!-- سطر ذكي لجلب آخر Business Case تم إنشاؤه لهذه الفرصة البيعية -->\r\n{% set bc_list = frappe.get_all(\"Sabre Business Case\", filters={\"opportunity\": doc.name}, fields=[\"name\", \"proposal_date\", \"pipeline_am\"], order_by=\"creation desc\", limit=1) %}\r\n\r\n<p>مرحباً،</p>\r\n<p>تم تقديم فرصة <strong>{{ doc.name }}</strong> للموافقة على الـ Business Case الخاص بها.</p>\r\n\r\n<table border=\"1\" cellpadding=\"8\" style=\"border-collapse:collapse;width:100%; border-color: #e0e0e0;\">\r\n    <tr style=\"background-color: #f9f9f9;\">\r\n        <td style=\"width: 30%;\"><strong>رقم الفرصة</strong></td>\r\n        <td>{{ doc.name }}</td>\r\n    </tr>\r\n    <tr>\r\n        <td><strong>العميل</strong></td>\r\n        <td>{{ doc.customer }}</td>\r\n    </tr>\r\n    <tr style=\"background-color: #f9f9f9;\">\r\n        <td><strong>نوع الفرصة</strong></td>\r\n        <td>{{ doc.opportunity_type }}</td>\r\n    </tr>\r\n    \r\n    <!-- إذا عثر النظام على الـ Business Case سيقوم بإظهار بياناته هنا تلقائياً -->\r\n    {% if bc_list %}\r\n    {% set bc = bc_list[0] %}\r\n    <tr>\r\n        <td><strong>Pipeline AM</strong></td>\r\n        <td>{{ bc.pipeline_am or doc.pipeline_am }}</td>\r\n    </tr>\r\n    <tr style=\"background-color: #f9f9f9;\">\r\n        <td><strong>تاريخ الاقتراح</strong></td>\r\n        <td>{{ bc.proposal_date }}</td>\r\n    </tr>\r\n    {% endif %}\r\n</table>\r\n\r\n<br>\r\n<p>الرجاء مراجعة الـ Business Case واتخاذ الإجراء المناسب بالاعتماد أو الإرجاع.</p>\r\n<br>\r\n\r\n<p style=\"text-align: center; margin: 20px 0;\">\r\n    {% if bc_list %}\r\n        <!-- 🎯 التعديل الأهم: الزر ينقلك الآن مباشرة لصفحة الـ Business Case المُراد اعتمادها -->\r\n        <a href=\"{{ frappe.utils.get_url_to_form('Sabre Business Case', bc_list[0].name) }}\" style=\"padding: 12px 24px; background-color: #007bff; color: white; text-decoration: none; border-radius: 4px; display: inline-block; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1);\">\r\n            👁️ عرض ومراجعة Business Case\r\n        </a>\r\n    {% else %}\r\n        <!-- زر احتياطي للفرصة في حال لم يجد النظام مستند الـ Business Case لأي سبب -->\r\n        <a href=\"{{ frappe.utils.get_url_to_form(doc.doctype, doc.name) }}\" style=\"padding: 12px 24px; background-color: #007bff; color: white; text-decoration: none; border-radius: 4px; display: inline-block; font-weight: bold;\">\r\n            عرض الفرصة البيعية\r\n        </a>\r\n    {% endif %}\r\n</p>\r\n\r\n<br>\r\n<p>— Sabre Sales System</p>",
+  "message": "<!-- Fetch the latest Business Case created for this opportunity -->\n{% set bc_list = frappe.get_all(\"Sabre Business Case\", filters={\"opportunity\": doc.name}, fields=[\"name\", \"proposal_date\", \"pipeline_am\"], order_by=\"creation desc\", limit=1) %}\n\n<p>Hello,</p>\n<p>Opportunity <strong>{{ doc.name }}</strong> has been submitted for Business Case approval.</p>\n\n<table border=\"1\" cellpadding=\"8\" style=\"border-collapse:collapse;width:100%; border-color: #e0e0e0;\">\n    <tr style=\"background-color: #f9f9f9;\">\n        <td style=\"width: 30%;\"><strong>Opportunity No.</strong></td>\n        <td>{{ doc.name }}</td>\n    </tr>\n    <tr>\n        <td><strong>Customer</strong></td>\n        <td>{{ doc.customer }}</td>\n    </tr>\n    <tr style=\"background-color: #f9f9f9;\">\n        <td><strong>Opportunity Type</strong></td>\n        <td>{{ doc.opportunity_type }}</td>\n    </tr>\n\n    <!-- If a Business Case is found, its details are shown here automatically -->\n    {% if bc_list %}\n    {% set bc = bc_list[0] %}\n    <tr>\n        <td><strong>Pipeline AM</strong></td>\n        <td>{{ bc.pipeline_am or doc.pipeline_am }}</td>\n    </tr>\n    <tr style=\"background-color: #f9f9f9;\">\n        <td><strong>Proposal Date</strong></td>\n        <td>{{ bc.proposal_date }}</td>\n    </tr>\n    {% endif %}\n</table>\n\n<br>\n<p>Please review the Business Case and take the appropriate action — approve or return it.</p>\n<br>\n\n<p style=\"text-align: center; margin: 20px 0;\">\n    {% if bc_list %}\n        <!-- Primary button: goes straight to the Business Case awaiting approval -->\n        <a href=\"{{ frappe.utils.get_url_to_form('Sabre Business Case', bc_list[0].name) }}\" style=\"padding: 12px 24px; background-color: #007bff; color: white; text-decoration: none; border-radius: 4px; display: inline-block; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1);\">\n            👁️ View &amp; Review Business Case\n        </a>\n    {% else %}\n        <!-- Fallback button: opens the opportunity if no Business Case document was found -->\n        <a href=\"{{ frappe.utils.get_url_to_form(doc.doctype, doc.name) }}\" style=\"padding: 12px 24px; background-color: #007bff; color: white; text-decoration: none; border-radius: 4px; display: inline-block; font-weight: bold;\">\n            View Opportunity\n        </a>\n    {% endif %}\n</p>\n\n<br>\n<p>— Sabre Sales System</p>",
   "message_type": "Markdown",
   "method": null,
   "minutes_offset": 0,
-  "modified": "2026-07-09 09:56:55.428495",
+  "modified": "2026-07-27 11:06:53.937885",
   "module": null,
-  "name": "Send to Neven to Approve or Send back",
+  "name": "Sabre HoS - Business Case Review Request",
   "print_format": null,
   "property_value": null,
   "recipients": [
@@ -242,11 +242,11 @@
   "filters": null,
   "from_attach_field": null,
   "is_standard": 0,
-  "message": "<!-- سطر ذكي لجلب آخر Business Case تم إنشاؤه لهذه الفرصة البيعية -->\r\n\r\n{% set bc_list = frappe.get_all(\"Sabre Business Case\", filters={\"opportunity\": doc.name}, fields=[\"name\", \"proposal_date\", \"pipeline_am\"], order_by=\"creation desc\", limit=1) %}\r\n\r\n\r\n\r\n<p>مرحباً،</p>\r\n\r\n<p>نود إبلاغك بأن <strong>The Head Of Sales</strong> قد وافق على الـ Business Case الخاصة بالفرصة <strong>{{ doc.name }}</strong>.</p>\r\n\r\n<p>تم نقل الفرصة تلقائياً إلى مرحلة التعاقد (<strong>Contract Preparation</strong>).</p>\r\n\r\n\r\n\r\n<table border=\"1\" cellpadding=\"8\" style=\"border-collapse:collapse;width:100%; border-color: #e0e0e0;\">\r\n\r\n    <tr style=\"background-color: #f9f9f9;\">\r\n\r\n        <td style=\"width: 30%;\"><strong>رقم الفرصة</strong></td>\r\n\r\n        <td>{{ doc.name }}</td>\r\n\r\n    </tr>\r\n\r\n    <tr>\r\n\r\n        <td><strong>العميل</strong></td>\r\n\r\n        <td>{{ doc.customer }}</td>\r\n\r\n    </tr>\r\n\r\n    <tr style=\"background-color: #f9f9f9;\">\r\n\r\n        <td><strong>نوع الفرصة</strong></td>\r\n\r\n        <td>{{ doc.opportunity_type }}</td>\r\n\r\n    </tr>\r\n\r\n    \r\n\r\n    <!-- إذا عثر النظام على الـ Business Case سيقوم بإظهار بياناته هنا تلقائياً -->\r\n\r\n    {% if bc_list %}\r\n\r\n    {% set bc = bc_list[0] %}\r\n\r\n    <tr>\r\n\r\n        <td><strong>Pipeline AM</strong></td>\r\n\r\n        <td>{{ bc.pipeline_am or doc.pipeline_am }}</td>\r\n\r\n    </tr>\r\n\r\n    <tr style=\"background-color: #f9f9f9;\">\r\n\r\n        <td><strong>تاريخ الاقتراح</strong></td>\r\n\r\n        <td>{{ bc.proposal_date }}</td>\r\n\r\n    </tr>\r\n\r\n    {% endif %}\r\n\r\n</table>\r\n\r\n\r\n\r\n<br>\r\n\r\n<p>الرجاء الدخول على الفرصة البيعية للبدء في إجراءات تجهيز وصياغة العقد المعتمد.</p>\r\n\r\n<br>\r\n\r\n\r\n\r\n<p style=\"text-align: center; margin: 20px 0;\">\r\n\r\n    <!-- 🎯 الزر الموحد: يفتح صفحة الفرصة البيعية لمتابعة إجراءات صياغة العقد باللون الأخضر (موافقة) -->\r\n\r\n    <a href=\"{{ frappe.utils.get_url_to_form(doc.doctype, doc.name) }}\" style=\"padding: 12px 24px; background-color: #28a745; color: white; text-decoration: none; border-radius: 4px; display: inline-block; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1);\">\r\n\r\n        ✅ عرض الفرصة ومتابعة العقد\r\n\r\n    </a>\r\n\r\n</p>\r\n\r\n\r\n\r\n<br>\r\n\r\n<p>— Sabre Sales System</p>",
+  "message": "<!-- Fetch the latest Business Case created for this opportunity -->\n{% set bc_list = frappe.get_all(\"Sabre Business Case\", filters={\"opportunity\": doc.name}, fields=[\"name\", \"proposal_date\", \"pipeline_am\"], order_by=\"creation desc\", limit=1) %}\n\n<p>Hello,</p>\n<p>This is to inform you that <strong>the Head of Sales</strong> has approved the Business Case for opportunity <strong>{{ doc.name }}</strong>.</p>\n<p>The opportunity has been moved automatically to the <strong>Contract Preparation</strong> stage.</p>\n\n<table border=\"1\" cellpadding=\"8\" style=\"border-collapse:collapse;width:100%; border-color: #e0e0e0;\">\n    <tr style=\"background-color: #f9f9f9;\">\n        <td style=\"width: 30%;\"><strong>Opportunity No.</strong></td>\n        <td>{{ doc.name }}</td>\n    </tr>\n    <tr>\n        <td><strong>Customer</strong></td>\n        <td>{{ doc.customer }}</td>\n    </tr>\n    <tr style=\"background-color: #f9f9f9;\">\n        <td><strong>Opportunity Type</strong></td>\n        <td>{{ doc.opportunity_type }}</td>\n    </tr>\n\n    <!-- If a Business Case is found, its details are shown here automatically -->\n    {% if bc_list %}\n    {% set bc = bc_list[0] %}\n    <tr>\n        <td><strong>Pipeline AM</strong></td>\n        <td>{{ bc.pipeline_am or doc.pipeline_am }}</td>\n    </tr>\n    <tr style=\"background-color: #f9f9f9;\">\n        <td><strong>Proposal Date</strong></td>\n        <td>{{ bc.proposal_date }}</td>\n    </tr>\n    {% endif %}\n</table>\n\n<br>\n<p>Please open the opportunity to begin preparing and drafting the approved contract.</p>\n<br>\n\n<p style=\"text-align: center; margin: 20px 0;\">\n    <!-- Single action button (green = approved): opens the opportunity to continue with the contract -->\n    <a href=\"{{ frappe.utils.get_url_to_form(doc.doctype, doc.name) }}\" style=\"padding: 12px 24px; background-color: #28a745; color: white; text-decoration: none; border-radius: 4px; display: inline-block; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1);\">\n        ✅ View Opportunity &amp; Continue with Contract\n    </a>\n</p>\n\n<br>\n<p>— Sabre Sales System</p>",
   "message_type": "Markdown",
   "method": null,
   "minutes_offset": 0,
-  "modified": "2026-07-06 15:28:37.000352",
+  "modified": "2026-07-27 11:06:18.935891",
   "module": null,
   "name": "Sabre AM - Business Case Approved Alert",
   "print_format": null,
@@ -256,7 +256,7 @@
     "bcc": null,
     "cc": null,
     "condition": null,
-    "receiver_by_document_field": "owner",
+    "receiver_by_document_field": "pipeline_am",
     "receiver_by_role": ""
    }
   ],
@@ -266,7 +266,7 @@
   "sender_email": null,
   "set_property_after_alert": null,
   "slack_webhook_url": null,
-  "subject": "تمت الموافقة على Business Case للفرصة: {{ doc.name }}",
+  "subject": "Business Case Approved for Opportunity: {{ doc.name }}",
   "value_changed": "workflow_state"
  },
  {
@@ -287,11 +287,11 @@
   "filters": null,
   "from_attach_field": null,
   "is_standard": 0,
-  "message": "{% set bc_list = frappe.get_all(\"Sabre Business Case\", filters={\"opportunity\": doc.name}, fields=[\"name\", \"proposal_date\", \"pipeline_am\"], order_by=\"creation desc\", limit=1) %}\r\n\r\n<p>مرحباً،</p>\r\n<p>تمت إعادة الفرصة <strong>{{ doc.name }}</strong> إليك لمراجعة وتعديل الـ Business Case الخاص بها.</p>\r\n\r\n<table border=\"1\" cellpadding=\"8\" style=\"border-collapse:collapse;width:100%; border-color: #e0e0e0;\">\r\n    <tr style=\"background-color: #f9f9f9;\">\r\n        <td style=\"width: 30%;\"><strong>رقم الفرصة</strong></td>\r\n        <td>{{ doc.name }}</td>\r\n    </tr>\r\n    <tr>\r\n        <td><strong>العميل</strong></td>\r\n        <td>{{ doc.customer }}</td>\r\n    </tr>\r\n    <tr style=\"background-color: #f9f9f9;\">\r\n        <td><strong>نوع الفرصة</strong></td>\r\n        <td>{{ doc.opportunity_type }}</td>\r\n    </tr>\r\n    \r\n    {% if bc_list %}\r\n    {% set bc = bc_list[0] %}\r\n    <tr>\r\n        <td><strong>Pipeline AM</strong></td>\r\n        <td>{{ bc.pipeline_am or doc.pipeline_am }}</td>\r\n    </tr>\r\n    <tr style=\"background-color: #f9f9f9;\">\r\n        <td><strong>تاريخ الاقتراح</strong></td>\r\n        <td>{{ bc.proposal_date }}</td>\r\n    </tr>\r\n    {% endif %}\r\n</table>\r\n\r\n<br>\r\n<p>الرجاء مراجعة الملاحظات، وتعديل البيانات المطلوبة في الـ Business Case، ثم إعادة تقديمها للمراجعة.</p>\r\n<br>\r\n\r\n<p style=\"text-align: center; margin: 20px 0;\">\r\n    {% if bc_list %}\r\n        <a href=\"{{ frappe.utils.get_url_to_form('Sabre Business Case', bc_list[0].name) }}\" style=\"padding: 12px 24px; background-color: #E67E22; color: white; text-decoration: none; border-radius: 4px; display: inline-block; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1);\">\r\n            🛠️ فتح وتعديل الـ Business Case\r\n        </a>\r\n    {% else %}\r\n        <a href=\"{{ frappe.utils.get_url_to_form(doc.doctype, doc.name) }}\" style=\"padding: 12px 24px; background-color: #E67E22; color: white; text-decoration: none; border-radius: 4px; display: inline-block; font-weight: bold;\">\r\n            عرض الفرصة البيعية\r\n        </a>\r\n    {% endif %}\r\n</p>\r\n\r\n<br>\r\n<p>— Sabre Sales System</p>",
+  "message": "{% set bc_list = frappe.get_all(\"Sabre Business Case\", filters={\"opportunity\": doc.name}, fields=[\"name\", \"proposal_date\", \"pipeline_am\"], order_by=\"creation desc\", limit=1) %}\n\n<p>Hello,</p>\n<p>Opportunity <strong>{{ doc.name }}</strong> has been returned to you to review and revise its Business Case.</p>\n\n<table border=\"1\" cellpadding=\"8\" style=\"border-collapse:collapse;width:100%; border-color: #e0e0e0;\">\n    <tr style=\"background-color: #f9f9f9;\">\n        <td style=\"width: 30%;\"><strong>Opportunity No.</strong></td>\n        <td>{{ doc.name }}</td>\n    </tr>\n    <tr>\n        <td><strong>Customer</strong></td>\n        <td>{{ doc.customer }}</td>\n    </tr>\n    <tr style=\"background-color: #f9f9f9;\">\n        <td><strong>Opportunity Type</strong></td>\n        <td>{{ doc.opportunity_type }}</td>\n    </tr>\n\n    {% if bc_list %}\n    {% set bc = bc_list[0] %}\n    <tr>\n        <td><strong>Pipeline AM</strong></td>\n        <td>{{ bc.pipeline_am or doc.pipeline_am }}</td>\n    </tr>\n    <tr style=\"background-color: #f9f9f9;\">\n        <td><strong>Proposal Date</strong></td>\n        <td>{{ bc.proposal_date }}</td>\n    </tr>\n    {% endif %}\n</table>\n\n<br>\n<p>Please review the feedback, update the required details in the Business Case, and resubmit it for review.</p>\n<br>\n\n<p style=\"text-align: center; margin: 20px 0;\">\n    {% if bc_list %}\n        <a href=\"{{ frappe.utils.get_url_to_form('Sabre Business Case', bc_list[0].name) }}\" style=\"padding: 12px 24px; background-color: #E67E22; color: white; text-decoration: none; border-radius: 4px; display: inline-block; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1);\">\n            🛠️ Open &amp; Edit Business Case\n        </a>\n    {% else %}\n        <a href=\"{{ frappe.utils.get_url_to_form(doc.doctype, doc.name) }}\" style=\"padding: 12px 24px; background-color: #E67E22; color: white; text-decoration: none; border-radius: 4px; display: inline-block; font-weight: bold;\">\n            View Opportunity\n        </a>\n    {% endif %}\n</p>\n\n<br>\n<p>— Sabre Sales System</p>",
   "message_type": "Markdown",
   "method": null,
   "minutes_offset": 0,
-  "modified": "2026-07-09 10:10:38.665422",
+  "modified": "2026-07-27 11:05:34.802839",
   "module": null,
   "name": "Sabre AM - Business Case Sent Back Alert",
   "print_format": null,
@@ -301,7 +301,7 @@
     "bcc": null,
     "cc": null,
     "condition": null,
-    "receiver_by_document_field": "owner",
+    "receiver_by_document_field": "pipeline_am",
     "receiver_by_role": ""
    }
   ],
@@ -311,7 +311,7 @@
   "sender_email": null,
   "set_property_after_alert": null,
   "slack_webhook_url": null,
-  "subject": "⚠️ إعادة الفرصة للمراجعة (Send Back): {{ doc.name }}",
+  "subject": "⚠️ Opportunity Sent Back for Review: {{ doc.name }}",
   "value_changed": "workflow_state"
  },
  {
@@ -488,13 +488,13 @@
   "filters": null,
   "from_attach_field": null,
   "is_standard": 0,
-  "message": "{% set bc_list = frappe.get_all(\"Sabre Business Case\", filters={\"opportunity\": doc.name}, fields=[\"name\", \"proposal_date\", \"pipeline_am\"], order_by=\"creation desc\", limit=1) %}\r\n\r\n{# 🌟 جلب العقد المرتبط بالفرصة لحل مشكلة الخطأ #}\r\n{% set contract_list = frappe.get_all(\"Sabre Contract\", filters={\"opportunity\": doc.name}, fields=[\"name\"], order_by=\"creation desc\", limit=1) %}\r\n\r\n<p>مرحباً،</p>\r\n<p>يرجى العلم بأنه <strong>تمت إعادة الفرصة {{ doc.name }} إليك لتعديل أو مراجعة بيانات العقد</strong>.</p>\r\n<p>تم إرجاع حالة الفرصة من مرحلة المراجعة إلى: (<strong>Contract Preparation</strong>).</p>\r\n\r\n<table border=\"1\" cellpadding=\"8\" style=\"border-collapse:collapse;width:100%; border-color: #e0e0e0;\">\r\n    <tr style=\"background-color: #f9f9f9;\">\r\n        <td style=\"width: 30%;\"><strong>رقم الفرصة</strong></td>\r\n        <td>{{ doc.name }}</td>\r\n    </tr>\r\n    <tr>\r\n        <td><strong>العميل</strong></td>\r\n        <td>{{ doc.customer }}</td>\r\n    </tr>\r\n    <tr style=\"background-color: #f9f9f9;\">\r\n        <td><strong>نوع الفرصة</strong></td>\r\n        <td>{{ doc.opportunity_type }}</td>\r\n    </tr>\r\n    {% if bc_list %}\r\n    {% set bc = bc_list[0] %}\r\n    <tr>\r\n        <td><strong>Pipeline AM</strong></td>\r\n        <td>{{ bc.pipeline_am or doc.pipeline_am }}</td>\r\n    </tr>\r\n    <tr style=\"background-color: #f9f9f9;\">\r\n        <td><strong>تاريخ الاقتراح</strong></td>\r\n        <td>{{ bc.proposal_date }}</td>\r\n    </tr>\r\n    {% endif %}\r\n</table>\r\n\r\n<br>\r\n<p>الرجاء مراجعة الملاحظات المدونة على الفرصة، وعمل التعديلات اللازمة على العقد، ثم إعادة إرساله للمراجعة مجدداً.</p>\r\n<br>\r\n\r\n<p style=\"text-align: center; margin: 20px 0;\">\r\n    {# 🌟 شرط أمان: إذا وجد عقد يفتح العقد، وإذا لم يجد يفتح شاشة الفرصة لتجنب أي كراش #}\r\n    {% if contract_list %}\r\n        <a href=\"{{ frappe.utils.get_url_to_form('Sabre Contract', contract_list[0].name) }}\" style=\"padding: 12px 24px; background-color: #e67e22; color: white; text-decoration: none; border-radius: 4px; display: inline-block; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1);\">\r\n            🛠️ فتح شاشة العقد وتعديل البيانات\r\n        </a>\r\n    {% else %}\r\n        <a href=\"{{ frappe.utils.get_url_to_form(doc.doctype, doc.name) }}\" style=\"padding: 12px 24px; background-color: #e67e22; color: white; text-decoration: none; border-radius: 4px; display: inline-block; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1);\">\r\n            📂 فتح الفرصة البيعية وتجهيز العقد\r\n        </a>\r\n    {% endif %}\r\n</p>\r\n<br>\r\n<p>— Sabre Sales System</p>",
+  "message": "{% set bc_list = frappe.get_all(\"Sabre Business Case\", filters={\"opportunity\": doc.name}, fields=[\"name\", \"proposal_date\", \"pipeline_am\"], order_by=\"creation desc\", limit=1) %}\n\n{# 🌟 Fetch the contract linked to this opportunity (prevents the error) #}\n{% set contract_list = frappe.get_all(\"Sabre Contract\", filters={\"opportunity\": doc.name}, fields=[\"name\"], order_by=\"creation desc\", limit=1) %}\n\n<p>Hello,</p>\n<p>Please note that <strong>opportunity {{ doc.name }} has been returned to you to amend or review the contract details</strong>.</p>\n<p>The opportunity has been moved back from the review stage to: (<strong>Contract Preparation</strong>).</p>\n\n<table border=\"1\" cellpadding=\"8\" style=\"border-collapse:collapse;width:100%; border-color: #e0e0e0;\">\n    <tr style=\"background-color: #f9f9f9;\">\n        <td style=\"width: 30%;\"><strong>Opportunity No.</strong></td>\n        <td>{{ doc.name }}</td>\n    </tr>\n    <tr>\n        <td><strong>Customer</strong></td>\n        <td>{{ doc.customer }}</td>\n    </tr>\n    <tr style=\"background-color: #f9f9f9;\">\n        <td><strong>Opportunity Type</strong></td>\n        <td>{{ doc.opportunity_type }}</td>\n    </tr>\n    {% if bc_list %}\n    {% set bc = bc_list[0] %}\n    <tr>\n        <td><strong>Pipeline AM</strong></td>\n        <td>{{ bc.pipeline_am or doc.pipeline_am }}</td>\n    </tr>\n    <tr style=\"background-color: #f9f9f9;\">\n        <td><strong>Proposal Date</strong></td>\n        <td>{{ bc.proposal_date }}</td>\n    </tr>\n    {% endif %}\n</table>\n\n<br>\n<p>Please review the notes recorded on the opportunity, make the required changes to the contract, and resubmit it for review.</p>\n<br>\n\n<p style=\"text-align: center; margin: 20px 0;\">\n    {# 🌟 Safety check: open the contract if one exists, otherwise open the opportunity to avoid an error #}\n    {% if contract_list %}\n        <a href=\"{{ frappe.utils.get_url_to_form('Sabre Contract', contract_list[0].name) }}\" style=\"padding: 12px 24px; background-color: #e67e22; color: white; text-decoration: none; border-radius: 4px; display: inline-block; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1);\">\n            🛠️ Open Contract &amp; Edit Details\n        </a>\n    {% else %}\n        <a href=\"{{ frappe.utils.get_url_to_form(doc.doctype, doc.name) }}\" style=\"padding: 12px 24px; background-color: #e67e22; color: white; text-decoration: none; border-radius: 4px; display: inline-block; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1);\">\n            📂 Open Opportunity &amp; Prepare Contract\n        </a>\n    {% endif %}\n</p>\n<br>\n<p>— Sabre Sales System</p>",
   "message_type": "Markdown",
   "method": null,
   "minutes_offset": 0,
-  "modified": "2026-07-09 10:09:00.439594",
+  "modified": "2026-07-27 11:04:28.209263",
   "module": null,
-  "name": "إعادة الفرصة لتعديل العقد — {{ doc.name }}",
+  "name": "Sabre AM - Contract Returned for Amendment",
   "print_format": null,
   "property_value": null,
   "recipients": [
@@ -502,7 +502,7 @@
     "bcc": null,
     "cc": null,
     "condition": null,
-    "receiver_by_document_field": "owner",
+    "receiver_by_document_field": "pipeline_am",
     "receiver_by_role": null
    }
   ],
@@ -512,7 +512,7 @@
   "sender_email": null,
   "set_property_after_alert": null,
   "slack_webhook_url": null,
-  "subject": "⚠️ إعادة الفرصة لتعديل العقد — {{ doc.name }}",
+  "subject": "⚠️ Opportunity Returned to Amend Contract — {{ doc.name }}",
   "value_changed": "workflow_state"
  },
  {
@@ -533,13 +533,13 @@
   "filters": null,
   "from_attach_field": null,
   "is_standard": 0,
-  "message": "<!-- سطر ذكي لجلب تفاصيل آخر عقد تم إنشاؤه لهذه الفرصة البيعية -->\r\n{% set contract_list = frappe.get_all(\"Sabre Contract\", filters={\"opportunity\": doc.name}, fields=[\"name\", \"contract_type\", \"start_date\", \"end_date\"], order_by=\"creation desc\", limit=1) %}\r\n{% set am_full_name = frappe.db.get_value(\"User\", doc.pipeline_am, \"full_name\") or doc.pipeline_am %}\r\n<p>مرحباً،</p>\r\n<p>نود إبلاغك بأن هناك عقداً جديداً تم تجهيزه بواسطة الـ Account Manager (<strong>{{ am_full_name }}</strong>) ويحتاج إلى مراجعتك وتعميدك للفرصة رقم <strong>{{ doc.name }}</strong>.</p>\r\n<table border=\"1\" cellpadding=\"8\" style=\"border-collapse:collapse;width:100%; border-color: #e0e0e0;\">\r\n    <tr style=\"background-color: #f9f9f9;\">\r\n        <td style=\"width: 30%;\"><strong>رقم الفرصة</strong></td>\r\n        <td>{{ doc.name }}</td>\r\n    </tr>\r\n    <tr>\r\n        <td><strong>العميل</strong></td>\r\n        <td>{{ doc.customer }}</td>\r\n    </tr>\r\n    <!-- 👤 التعديل الأول: إظهار اسم الـ Account Manager المسؤول عن الفرصة -->\r\n    <tr style=\"background-color: #f9f9f9;\">\r\n        <td><strong>Pipeline AM</strong></td>\r\n        <td>{{ doc.pipeline_am }}</td>\r\n    </tr>\r\n    \r\n    <!-- إذا عثر النظام على العقد المرتبط بالفرصة سيعرض بياناته هنا تلقائياً -->\r\n    {% if contract_list %}\r\n    {% set contract = contract_list[0] %}\r\n    <tr>\r\n        <td><strong>رقم العقد في النظام</strong></td>\r\n        <td>{{ contract.name }}</td>\r\n    </tr>\r\n    <tr style=\"background-color: #f9f9f9;\">\r\n        <td><strong>نوع العقد</strong></td>\r\n        <td>{{ contract.contract_type }}</td>\r\n    </tr>\r\n    <tr>\r\n        <td><strong>تاريخ البداية</strong></td>\r\n        <td>{{ contract.start_date }}</td>\r\n    </tr>\r\n    <tr style=\"background-color: #f9f9f9;\">\r\n        <td><strong>تاريخ الانتهاء</strong></td>\r\n        <td>{{ contract.end_date }}</td>\r\n    </tr>\r\n    {% else %}\r\n    <tr>\r\n        <td colspan=\"2\" style=\"color: #d9534f; text-align: center; font-weight: bold;\">\r\n            ⚠️ تنبيه: تم تحويل الحالة للمراجعة ولكن لم يتم إنشاء مستند عقد مرتبط بالفرصة بعد!\r\n        </td>\r\n    </tr>\r\n    {% endif %}\r\n</table>\r\n\r\n<br>\r\n<p>الرجاء الضغط على الزر أدناه للاطلاع على تفاصيل العقد والمرفقات لاتخاذ إجراء التعميد أو الإعادة للتعديل.</p>\r\n<br>\r\n\r\n<p style=\"text-align: center; margin: 20px 0;\">\r\n    {% if contract_list %}\r\n        <!-- 🎯 التعديل الثاني: الزر الأزرق يوجه الآن مباشرة لصفحة العقد الجديد (Sabre Contract) -->\r\n        <a href=\"{{ frappe.utils.get_url_to_form('Sabre Contract', contract_list[0].name) }}\" style=\"padding: 12px 24px; background-color: #007bff; color: white; text-decoration: none; border-radius: 4px; display: inline-block; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1);\">\r\n            🔍 فتح ومراجعة مستند العقد\r\n        </a>\r\n    {% else %}\r\n        <!-- زر احتياطي يفتح صفحة الفرصة إذا لم يجد النظام مستند العقد بعد -->\r\n        <a href=\"{{ frappe.utils.get_url_to_form(doc.doctype, doc.name) }}\" style=\"padding: 12px 24px; background-color: #007bff; color: white; text-decoration: none; border-radius: 4px; display: inline-block; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1);\">\r\n            🔍 فتح الفرصة البيعية\r\n        </a>\r\n    {% endif %}\r\n</p>\r\n\r\n<br>\r\n<p>— Sabre Sales System</p>",
+  "message": "<!-- Fetch the details of the latest contract created for this opportunity -->\n{% set contract_list = frappe.get_all(\"Sabre Contract\", filters={\"opportunity\": doc.name}, fields=[\"name\", \"contract_type\", \"start_date\", \"end_date\"], order_by=\"creation desc\", limit=1) %}\n{% set am_full_name = frappe.db.get_value(\"User\", doc.pipeline_am, \"full_name\") or doc.pipeline_am %}\n<p>Hello,</p>\n<p>This is to inform you that a new contract has been prepared by the Account Manager (<strong>{{ am_full_name }}</strong>) and requires your review and approval for opportunity <strong>{{ doc.name }}</strong>.</p>\n<table border=\"1\" cellpadding=\"8\" style=\"border-collapse:collapse;width:100%; border-color: #e0e0e0;\">\n    <tr style=\"background-color: #f9f9f9;\">\n        <td style=\"width: 30%;\"><strong>Opportunity No.</strong></td>\n        <td>{{ doc.name }}</td>\n    </tr>\n    <tr>\n        <td><strong>Customer</strong></td>\n        <td>{{ doc.customer }}</td>\n    </tr>\n    <!-- Shows the Account Manager responsible for this opportunity -->\n    <tr style=\"background-color: #f9f9f9;\">\n        <td><strong>Pipeline AM</strong></td>\n        <td>{{ am_full_name }}</td>\n    </tr>\n\n    <!-- If a linked contract is found, its details are shown here automatically -->\n    {% if contract_list %}\n    {% set contract = contract_list[0] %}\n    <tr>\n        <td><strong>Contract No.</strong></td>\n        <td>{{ contract.name }}</td>\n    </tr>\n    <tr style=\"background-color: #f9f9f9;\">\n        <td><strong>Contract Type</strong></td>\n        <td>{{ contract.contract_type }}</td>\n    </tr>\n    <tr>\n        <td><strong>Start Date</strong></td>\n        <td>{{ contract.start_date }}</td>\n    </tr>\n    <tr style=\"background-color: #f9f9f9;\">\n        <td><strong>End Date</strong></td>\n        <td>{{ contract.end_date }}</td>\n    </tr>\n    {% else %}\n    <tr>\n        <td colspan=\"2\" style=\"color: #d9534f; text-align: center; font-weight: bold;\">\n            ⚠️ Warning: the opportunity was moved to review, but no contract document has been created for it yet.\n        </td>\n    </tr>\n    {% endif %}\n</table>\n\n<br>\n<p>Please click the button below to review the contract details and attachments, then approve it or return it for amendment.</p>\n<br>\n\n<p style=\"text-align: center; margin: 20px 0;\">\n    {% if contract_list %}\n        <!-- Opens the contract document directly -->\n        <a href=\"{{ frappe.utils.get_url_to_form('Sabre Contract', contract_list[0].name) }}\" style=\"padding: 12px 24px; background-color: #007bff; color: white; text-decoration: none; border-radius: 4px; display: inline-block; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1);\">\n            🔍 Open &amp; Review Contract\n        </a>\n    {% else %}\n        <!-- Fallback: opens the opportunity if no contract document exists yet -->\n        <a href=\"{{ frappe.utils.get_url_to_form(doc.doctype, doc.name) }}\" style=\"padding: 12px 24px; background-color: #007bff; color: white; text-decoration: none; border-radius: 4px; display: inline-block; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1);\">\n            🔍 Open Opportunity\n        </a>\n    {% endif %}\n</p>\n\n<br>\n<p>— Sabre Sales System</p>",
   "message_type": "Markdown",
   "method": null,
   "minutes_offset": 0,
-  "modified": "2026-07-09 09:55:26.151394",
+  "modified": "2026-07-27 11:03:38.867252",
   "module": null,
-  "name": "طلب مراجعة عقد — {{ doc.name }}",
+  "name": "Sabre HoS - Contract Review Request",
   "print_format": null,
   "property_value": null,
   "recipients": [
@@ -557,7 +557,7 @@
   "sender_email": null,
   "set_property_after_alert": null,
   "slack_webhook_url": null,
-  "subject": "طلب مراجعة وتعميد العقد للفرصة — {{ doc.name }}",
+  "subject": "Contract Review & Approval Requested — Opportunity {{ doc.name }}",
   "value_changed": "workflow_state"
  },
  {
@@ -578,13 +578,13 @@
   "filters": null,
   "from_attach_field": null,
   "is_standard": 0,
-  "message": "<!-- سطر ذكي لجلب تفاصيل العقد المرتبط بالفرصة -->\r\n{% set contract_list = frappe.get_all(\"Sabre Contract\", filters={\"opportunity\": doc.name}, fields=[\"name\", \"contract_type\", \"start_date\", \"end_date\"], order_by=\"creation desc\", limit=1) %}\r\n\r\n<!-- سطر ذكي لجلب الاسم الكامل للـ Account Manager من حسابه -->\r\n{% set am_full_name = frappe.db.get_value(\"User\", doc.pipeline_am, \"full_name\") or doc.pipeline_am %}\r\n\r\n<p>مرحباً <strong>{{ am_full_name }}</strong>،</p>\r\n<p>يسعدنا إبلاغك بأن <strong>The Head Of Sales</strong> قد راجع العقد الخاص بالفرصة رقم <strong>{{ doc.name }}</strong> وقام بـ <strong>الموافقة المبدئية عليه</strong>.</p>\r\n<p>تم نقل الفرصة تلقائياً إلى مرحلة التوقيع (<strong>Contract Signing</strong>).</p>\r\n\r\n<table border=\"1\" cellpadding=\"8\" style=\"border-collapse:collapse;width:100%; border-color: #e0e0e0;\">\r\n    <tr style=\"background-color: #f9f9f9;\">\r\n        <td style=\"width: 30%;\"><strong>رقم الفرصة</strong></td>\r\n        <td>{{ doc.name }}</td>\r\n    </tr>\r\n    <tr>\r\n        <td><strong>العميل</strong></td>\r\n        <td>{{ doc.customer }}</td>\r\n    </tr>\r\n    \r\n    {% if contract_list %}\r\n    {% set contract = contract_list[0] %}\r\n    <tr style=\"background-color: #f9f9f9;\">\r\n        <td><strong>رقم العقد المعتمد</strong></td>\r\n        <td>{{ contract.name }}</td>\r\n    </tr>\r\n    <tr>\r\n        <td><strong>نوع العقد</strong></td>\r\n        <td>{{ contract.contract_type }}</td>\r\n    </tr>\r\n    <tr style=\"background-color: #f9f9f9;\">\r\n        <td><strong>تاريخ البداية</strong></td>\r\n        <td>{{ contract.start_date }}</td>\r\n    </tr>\r\n    <tr>\r\n        <td><strong>تاريخ الانتهاء</strong></td>\r\n        <td>{{ contract.end_date }}</td>\r\n    </tr>\r\n    {% endif %}\r\n</table>\r\n\r\n<br>\r\n<p>الرجاء الضغط على الزر أدناه للانتقال مباشرة إلى مستند العقد وطباعته أو إرساله للعميل لبدء إجراءات التوقيع الرسمي والتفعيل.</p>\r\n<br>\r\n\r\n<p style=\"text-align: center; margin: 20px 0;\">\r\n    {% if contract_list %}\r\n        <!-- 🎯 الزر يوجه الـ AM مباشرة لصفحة العقد الجديد لبدء التوقيع باللون الأخضر -->\r\n        <a href=\"{{ frappe.utils.get_url_to_form('Sabre Contract', contract_list[0].name) }}\" style=\"padding: 12px 24px; background-color: #28a745; color: white; text-decoration: none; border-radius: 4px; display: inline-block; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1);\">\r\n            ✍️ فتح مستند العقد وبدء التوقيع\r\n        </a>\r\n    {% else %}\r\n        <a href=\"{{ frappe.utils.get_url_to_form(doc.doctype, doc.name) }}\" style=\"padding: 12px 24px; background-color: #28a745; color: white; text-decoration: none; border-radius: 4px; display: inline-block; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1);\">\r\n            🔍 فتح الفرصة البيعية\r\n        </a>\r\n    {% endif %}\r\n</p>\r\n\r\n<br>\r\n<p>— Sabre Sales System</p>",
+  "message": "<!-- Fetch the details of the contract linked to this opportunity -->\n{% set contract_list = frappe.get_all(\"Sabre Contract\", filters={\"opportunity\": doc.name}, fields=[\"name\", \"contract_type\", \"start_date\", \"end_date\"], order_by=\"creation desc\", limit=1) %}\n\n<!-- Fetch the Account Manager's full name from their user account -->\n{% set am_full_name = frappe.db.get_value(\"User\", doc.pipeline_am, \"full_name\") or doc.pipeline_am %}\n\n<p>Hello <strong>{{ am_full_name }}</strong>,</p>\n<p>We're pleased to inform you that <strong>the Head of Sales</strong> has reviewed the contract for opportunity <strong>{{ doc.name }}</strong> and has <strong>given initial approval</strong>.</p>\n<p>The opportunity has been moved automatically to the <strong>Contract Signing</strong> stage.</p>\n\n<table border=\"1\" cellpadding=\"8\" style=\"border-collapse:collapse;width:100%; border-color: #e0e0e0;\">\n    <tr style=\"background-color: #f9f9f9;\">\n        <td style=\"width: 30%;\"><strong>Opportunity No.</strong></td>\n        <td>{{ doc.name }}</td>\n    </tr>\n    <tr>\n        <td><strong>Customer</strong></td>\n        <td>{{ doc.customer }}</td>\n    </tr>\n\n    {% if contract_list %}\n    {% set contract = contract_list[0] %}\n    <tr style=\"background-color: #f9f9f9;\">\n        <td><strong>Approved Contract No.</strong></td>\n        <td>{{ contract.name }}</td>\n    </tr>\n    <tr>\n        <td><strong>Contract Type</strong></td>\n        <td>{{ contract.contract_type }}</td>\n    </tr>\n    <tr style=\"background-color: #f9f9f9;\">\n        <td><strong>Start Date</strong></td>\n        <td>{{ contract.start_date }}</td>\n    </tr>\n    <tr>\n        <td><strong>End Date</strong></td>\n        <td>{{ contract.end_date }}</td>\n    </tr>\n    {% endif %}\n</table>\n\n<br>\n<p>Please click the button below to go straight to the contract document — print it or send it to the customer to begin the official signing and activation process.</p>\n<br>\n\n<p style=\"text-align: center; margin: 20px 0;\">\n    {% if contract_list %}\n        <!-- Takes the AM directly to the contract to start the signing process -->\n        <a href=\"{{ frappe.utils.get_url_to_form('Sabre Contract', contract_list[0].name) }}\" style=\"padding: 12px 24px; background-color: #28a745; color: white; text-decoration: none; border-radius: 4px; display: inline-block; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1);\">\n            ✍️ Open Contract &amp; Start Signing\n        </a>\n    {% else %}\n        <a href=\"{{ frappe.utils.get_url_to_form(doc.doctype, doc.name) }}\" style=\"padding: 12px 24px; background-color: #28a745; color: white; text-decoration: none; border-radius: 4px; display: inline-block; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1);\">\n            🔍 Open Opportunity\n        </a>\n    {% endif %}\n</p>\n\n<br>\n<p>— Sabre Sales System</p>",
   "message_type": "Markdown",
   "method": null,
   "minutes_offset": 0,
-  "modified": "2026-07-06 11:50:04.214807",
+  "modified": "2026-07-27 11:02:46.563596",
   "module": null,
-  "name": "موافقة العقد وبدء التوقيع — {{ doc.name }}",
+  "name": "Sabre AM - Contract Approved for Signing",
   "print_format": null,
   "property_value": null,
   "recipients": [
@@ -592,7 +592,7 @@
     "bcc": null,
     "cc": null,
     "condition": null,
-    "receiver_by_document_field": "owner",
+    "receiver_by_document_field": "pipeline_am",
     "receiver_by_role": null
    }
   ],
@@ -602,7 +602,7 @@
   "sender_email": null,
   "set_property_after_alert": null,
   "slack_webhook_url": null,
-  "subject": "🎉 موافقة على العقد وبدء مرحلة التوقيع — الفرصة {{ doc.name }}",
+  "subject": "🎉 Contract Approved — Signing Stage Started for Opportunity {{ doc.name }}",
   "value_changed": "workflow_state"
  },
  {
@@ -623,13 +623,13 @@
   "filters": null,
   "from_attach_field": null,
   "is_standard": 0,
-  "message": "<!-- سطر ذكي لجلب تفاصيل العقد المرتبط بالفرصة -->\r\n{% set contract_list = frappe.get_all(\"Sabre Contract\", filters={\"opportunity\": doc.name}, fields=[\"name\", \"contract_type\", \"start_date\", \"end_date\"], order_by=\"creation desc\", limit=1) %}\r\n\r\n<!-- سطر ذكي ومؤمن لجلب الاسم الكامل للـ Account Manager المسؤول -->\r\n{% set target_user = doc.pipeline_am or doc.owner %}\r\n{% set am_full_name = frappe.db.get_value(\"User\", target_user, \"full_name\") or target_user %}\r\n\r\n<p>مرحباً <strong>Head of Sales</strong>،</p>\r\n<p>نود إفادتكم بأنه تم بحمد الله <strong>توقيع العقد رسميًا من قِبل العميل</strong> بعد موافقته الكاملة على كافة الشروط والأحكام الخاصة بالفرصة رقم <strong>{{ doc.name }}</strong>، وتمت إحالته من قِبل الـ Account Manager (<strong>{{ am_full_name }}</strong>).</p>\r\n<p>يرجى التفضل بـ <strong>مراجعة وتدقيق المستند الموقّع</strong> للتأكد من سلامة الأختام والتواقيع تمهيداً للاعتماد النهائي؛ علماً بأن الحالة الحالية للفرصة هي: (<strong>Contract Signing Review</strong>).</p>).</p>\r\n\r\n<table border=\"1\" cellpadding=\"8\" style=\"border-collapse:collapse;width:100%; border-color: #e0e0e0;\">\r\n    <tr style=\"background-color: #f9f9f9;\">\r\n        <td style=\"width: 30%;\"><strong>رقم الفرصة</strong></td>\r\n        <td>{{ doc.name }}</td>\r\n    </tr>\r\n    <tr>\r\n        <td><strong>العميل</strong></td>\r\n        <td>{{ doc.customer }}</td>\r\n    </tr>\r\n    <tr style=\"background-color: #f9f9f9;\">\r\n        <td><strong>الموظف المسؤول (AM)</strong></td>\r\n        <td>{{ am_full_name }}</td>\r\n    </tr>\r\n    \r\n    {% if contract_list %}\r\n    {% set contract = contract_list[0] %}\r\n    <tr>\r\n        <td><strong>رقم العقد في النظام</strong></td>\r\n        <td>{{ contract.name }}</td>\r\n    </tr>\r\n    <tr style=\"background-color: #f9f9f9;\">\r\n        <td><strong>نوع العقد</strong></td>\r\n        <td>{{ contract.contract_type or 'غير محدد' }}</td>\r\n    </tr>\r\n    <tr>\r\n        <td><strong>تاريخ البداية</strong></td>\r\n        <td>{{ contract.start_date or 'غير محدد' }}</td>\r\n    </tr>\r\n    <tr style=\"background-color: #f9f9f9;\">\r\n        <td><strong>تاريخ الانتهاء</strong></td>\r\n        <td>{{ contract.end_date or 'غير محدد' }}</td>\r\n    </tr>\r\n    {% endif %}\r\n</table>\r\n\r\n<br>\r\n<p>الرجاء الضغط على الزر أدناه للاطلاع على العقد بعد التوقيع ثم المضي قدما لمرحلة التنفيذ.</p>\r\n<br>\r\n\r\n<p style=\"text-align: center; margin: 20px 0;\">\r\n    {% if contract_list %}\r\n        <!-- 🟧 زر برتقالي مخصص لإعادة المراجعة والتدقيق المباشر للعقد -->\r\n        <a href=\"{{ frappe.utils.get_url_to_form('Sabre Contract', contract_list[0].name) }}\" style=\"padding: 12px 24px; background-color: #e67e22; color: white; text-decoration: none; border-radius: 4px; display: inline-block; font-weight: bold; box-shadow: 0 4px 6px rgba(230, 126, 34, 0.2); transition: all 0.3s;\">\r\n            🔍 إفحص مستند العقد واعتماده\r\n        </a>\r\n    {% else %}\r\n        <!-- زر احتياطي باللون الأزرق المظلم يفتح الفرصة في حال عدم العثور على مستند العقد -->\r\n        <a href=\"{{ frappe.utils.get_url_to_form(doc.doctype, doc.name) }}\" style=\"padding: 12px 24px; background-color: #007bff; color: white; text-decoration: none; border-radius: 4px; display: inline-block; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1);\">\r\n            📂 فتح شاشة الفرصة البيعية\r\n        </a>\r\n    {% endif %}\r\n</p>\r\n\r\n<br>\r\n<p>— Sabre Sales System</p>",
+  "message": "<!-- Fetch the details of the contract linked to this opportunity -->\n{% set contract_list = frappe.get_all(\"Sabre Contract\", filters={\"opportunity\": doc.name}, fields=[\"name\", \"contract_type\", \"start_date\", \"end_date\"], order_by=\"creation desc\", limit=1) %}\n\n<!-- Safely fetch the responsible Account Manager's full name -->\n{% set target_user = doc.pipeline_am or doc.owner %}\n{% set am_full_name = frappe.db.get_value(\"User\", target_user, \"full_name\") or target_user %}\n\n<p>Hello <strong>Head of Sales</strong>,</p>\n<p>We're pleased to inform you that <strong>the contract has been officially signed by the customer</strong>, following their full acceptance of all terms and conditions for opportunity <strong>{{ doc.name }}</strong>. It has been submitted by the Account Manager (<strong>{{ am_full_name }}</strong>).</p>\n<p>Please <strong>review and verify the signed document</strong> to confirm the stamps and signatures are in order, ahead of final approval. The opportunity's current status is: (<strong>Contract Signing Review</strong>).</p>\n\n<table border=\"1\" cellpadding=\"8\" style=\"border-collapse:collapse;width:100%; border-color: #e0e0e0;\">\n    <tr style=\"background-color: #f9f9f9;\">\n        <td style=\"width: 30%;\"><strong>Opportunity No.</strong></td>\n        <td>{{ doc.name }}</td>\n    </tr>\n    <tr>\n        <td><strong>Customer</strong></td>\n        <td>{{ doc.customer }}</td>\n    </tr>\n    <tr style=\"background-color: #f9f9f9;\">\n        <td><strong>Responsible AM</strong></td>\n        <td>{{ am_full_name }}</td>\n    </tr>\n\n    {% if contract_list %}\n    {% set contract = contract_list[0] %}\n    <tr>\n        <td><strong>Contract No.</strong></td>\n        <td>{{ contract.name }}</td>\n    </tr>\n    <tr style=\"background-color: #f9f9f9;\">\n        <td><strong>Contract Type</strong></td>\n        <td>{{ contract.contract_type or 'Not specified' }}</td>\n    </tr>\n    <tr>\n        <td><strong>Start Date</strong></td>\n        <td>{{ contract.start_date or 'Not specified' }}</td>\n    </tr>\n    <tr style=\"background-color: #f9f9f9;\">\n        <td><strong>End Date</strong></td>\n        <td>{{ contract.end_date or 'Not specified' }}</td>\n    </tr>\n    {% endif %}\n</table>\n\n<br>\n<p>Please click the button below to review the signed contract and proceed to the implementation stage.</p>\n<br>\n\n<p style=\"text-align: center; margin: 20px 0;\">\n    {% if contract_list %}\n        <!-- Orange button: go straight to reviewing and approving the contract -->\n        <a href=\"{{ frappe.utils.get_url_to_form('Sabre Contract', contract_list[0].name) }}\" style=\"padding: 12px 24px; background-color: #e67e22; color: white; text-decoration: none; border-radius: 4px; display: inline-block; font-weight: bold; box-shadow: 0 4px 6px rgba(230, 126, 34, 0.2); transition: all 0.3s;\">\n            🔍 Review &amp; Approve Contract\n        </a>\n    {% else %}\n        <!-- Fallback: opens the opportunity if no contract document is found -->\n        <a href=\"{{ frappe.utils.get_url_to_form(doc.doctype, doc.name) }}\" style=\"padding: 12px 24px; background-color: #007bff; color: white; text-decoration: none; border-radius: 4px; display: inline-block; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1);\">\n            📂 Open Opportunity\n        </a>\n    {% endif %}\n</p>\n\n<br>\n<p>— Sabre Sales System</p>",
   "message_type": "Markdown",
   "method": null,
   "minutes_offset": 0,
-  "modified": "2026-07-09 09:53:54.457095",
+  "modified": "2026-07-27 11:01:55.631069",
   "module": null,
-  "name": "إعادة العقد للمراجعة من التوقيع — {{ doc.name }}",
+  "name": "Sabre HoS - Signed Contract for Review",
   "print_format": null,
   "property_value": null,
   "recipients": [
@@ -647,7 +647,7 @@
   "sender_email": null,
   "set_property_after_alert": null,
   "slack_webhook_url": null,
-  "subject": "🔄إعادة العقد للمراجعة مجدداً من مرحلة التوقيع — الفرصة {{ doc.name }}",
+  "subject": "🔄 Contract Returned to Review from Signing Stage — Opportunity {{ doc.name }}",
   "value_changed": "workflow_state"
  },
  {
@@ -668,13 +668,13 @@
   "filters": null,
   "from_attach_field": null,
   "is_standard": 0,
-  "message": "<!-- 1. جلب تفاصيل العقد المرتبط بالفرصة -->\r\n{% set contract_list = frappe.get_all(\"Sabre Contract\", filters={\"opportunity\": doc.name}, fields=[\"name\", \"contract_type\", \"start_date\", \"end_date\"], order_by=\"creation desc\", limit=1) %}\r\n\r\n<!-- 2. تحديد المعرّف الخاص بالـ AM -->\r\n{% set target_user = doc.get(\"pipeline_am\") or doc.owner %}\r\n\r\n<!-- 3. جلب الاسم الكامل للمستخدم بطريقة متوافقة مع بيئة Jinja الآمنة -->\r\n{% set user_data = frappe.get_all(\"User\", filters={\"name\": target_user}, fields=[\"full_name\"], limit=1) %}\r\n{% set am_full_name = user_data[0].full_name if user_data else target_user %}\r\n\r\n<p>مرحباً <strong>{{ am_full_name }}</strong>،</p>\r\n<p>يرجى العلم بأن <strong>Head of Sales</strong> قد قام بـ <strong>إعادة العقد الموقّع لوجود ملاحظات تتطلب التعديل أو الاستكمال</strong>.</p>\r\n<p>بناءً على ذلك، تم إرجاع حالة الفرصة رقم <strong>{{ doc.name }}</strong> من مرحلة التدقيق النهائي إلى: (<strong>Contract Signing</strong>).</p>\r\n\r\n<blockquote style=\"background-color: #fffbf5; border-left: 4px solid #e67e22; padding: 12px; margin: 15px 0; font-style: italic;\">\r\n    💡 <strong>تنبيه للمسؤول:</strong> يرجى مراجعة سجل التعليقات (Comments) والملاحظات أسفل شاشة الفرصة في النظام للوقوف على التعديل المطلوب (مثل: إعادة رفع المرفق، استكمال أختام معينة، أو تعديل تواريخ متباينة).\r\n</blockquote>\r\n\r\n<table border=\"1\" cellpadding=\"8\" style=\"border-collapse:collapse;width:100%; border-color: #e0e0e0;\">\r\n    <tr style=\"background-color: #f9f9f9;\">\r\n        <td style=\"width: 30%;\"><strong>رقم الفرصة</strong></td>\r\n        <td>{{ doc.name }}</td>\r\n    </tr>\r\n    <tr>\r\n        <td><strong>العميل</strong></td>\r\n        <td>{{ doc.customer }}</td>\r\n    </tr>\r\n    <tr style=\"background-color: #f9f9f9;\">\r\n        <td><strong>الموظف المسؤول (AM)</strong></td>\r\n        <td>{{ am_full_name }}</td>\r\n    </tr>\r\n    \r\n    {% if contract_list %}\r\n    {% set contract = contract_list[0] %}\r\n    <tr>\r\n        <td><strong>رقم العقد في النظام</strong></td>\r\n        <td>{{ contract.name }}</td>\r\n    </tr>\r\n    <tr style=\"background-color: #f9f9f9;\">\r\n        <td><strong>نوع العقد</strong></td>\r\n        <td>{{ contract.contract_type or 'غير محدد' }}</td>\r\n    </tr>\r\n    <tr>\r\n        <td><strong>تاريخ البداية</strong></td>\r\n        <td>{{ contract.start_date or 'غير محدد' }}</td>\r\n    </tr>\r\n    {% endif %}\r\n</table>\r\n\r\n<br>\r\n<p>الرجاء الضغط على الزر أدناه للانتقال الفوري إلى مستند العقد، وإجراء التعديلات المطلوبة ثم إعادة تقديم الطلب للمراجعة والاعتماد بعد الجاهزية.</p>\r\n<br>\r\n\r\n<p style=\"text-align: center; margin: 20px 0;\">\r\n    {% if contract_list %}\r\n        <!-- زر برتقالي دافئ لتنبيه الـ AM بضرورة اتخاذ إجراء تصحيحي سريع للمستند -->\r\n        <a href=\"{{ frappe.utils.get_url_to_form('Sabre Contract', contract_list[0].name) }}\" style=\"padding: 12px 24px; background-color: #e67e22; color: white; text-decoration: none; border-radius: 4px; display: inline-block; font-weight: bold; box-shadow: 0 4px 6px rgba(230, 126, 34, 0.2); transition: all 0.3s;\">\r\n            🛠️ فتح مستند العقد واستكمال التعديلات\r\n        </a>\r\n    {% else %}\r\n        <!-- زر احتياطي داكن يفتح الفرصة البيعية الأصلية -->\r\n        <a href=\"{{ frappe.utils.get_url_to_form(doc.doctype, doc.name) }}\" style=\"padding: 12px 24px; background-color: #2c3e50; color: white; text-decoration: none; border-radius: 4px; display: inline-block; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1);\">\r\n            📂 فتح شاشة الفرصة البيعية\r\n        </a>\r\n    {% endif %}\r\n</p>\r\n\r\n<br>\r\n<p>— Sabre Sales System</p>",
+  "message": "<!-- 1. Fetch the contract linked to this opportunity -->\n{% set contract_list = frappe.get_all(\"Sabre Contract\", filters={\"opportunity\": doc.name}, fields=[\"name\", \"contract_type\", \"start_date\", \"end_date\"], order_by=\"creation desc\", limit=1) %}\n\n<!-- 2. Determine the AM's user id -->\n{% set target_user = doc.get(\"pipeline_am\") or doc.owner %}\n\n<!-- 3. Fetch the user's full name in a way that works inside safe Jinja -->\n{% set user_data = frappe.get_all(\"User\", filters={\"name\": target_user}, fields=[\"full_name\"], limit=1) %}\n{% set am_full_name = user_data[0].full_name if user_data else target_user %}\n\n<p>Hello <strong>{{ am_full_name }}</strong>,</p>\n<p>Please note that the <strong>Head of Sales</strong> has <strong>returned the signed contract — there are remarks requiring amendment or completion</strong>.</p>\n<p>Accordingly, opportunity <strong>{{ doc.name }}</strong> has been moved back from final review to: (<strong>Contract Signing</strong>).</p>\n\n<blockquote style=\"background-color: #fffbf5; border-left: 4px solid #e67e22; padding: 12px; margin: 15px 0; font-style: italic;\">\n    💡 <strong>Note:</strong> Please check the comments and notes at the bottom of the opportunity in the system to see exactly what is required (for example: re-upload the attachment, obtain missing stamps, or correct mismatched dates).\n</blockquote>\n\n<table border=\"1\" cellpadding=\"8\" style=\"border-collapse:collapse;width:100%; border-color: #e0e0e0;\">\n    <tr style=\"background-color: #f9f9f9;\">\n        <td style=\"width: 30%;\"><strong>Opportunity No.</strong></td>\n        <td>{{ doc.name }}</td>\n    </tr>\n    <tr>\n        <td><strong>Customer</strong></td>\n        <td>{{ doc.customer }}</td>\n    </tr>\n    <tr style=\"background-color: #f9f9f9;\">\n        <td><strong>Responsible AM</strong></td>\n        <td>{{ am_full_name }}</td>\n    </tr>\n\n    {% if contract_list %}\n    {% set contract = contract_list[0] %}\n    <tr>\n        <td><strong>Contract No.</strong></td>\n        <td>{{ contract.name }}</td>\n    </tr>\n    <tr style=\"background-color: #f9f9f9;\">\n        <td><strong>Contract Type</strong></td>\n        <td>{{ contract.contract_type or 'Not specified' }}</td>\n    </tr>\n    <tr>\n        <td><strong>Start Date</strong></td>\n        <td>{{ contract.start_date or 'Not specified' }}</td>\n    </tr>\n    {% endif %}\n</table>\n\n<br>\n<p>Please click the button below to go straight to the contract document, make the required changes, and resubmit it for review and approval once ready.</p>\n<br>\n\n<p style=\"text-align: center; margin: 20px 0;\">\n    {% if contract_list %}\n        <!-- Orange button: prompts the AM to take corrective action on the document -->\n        <a href=\"{{ frappe.utils.get_url_to_form('Sabre Contract', contract_list[0].name) }}\" style=\"padding: 12px 24px; background-color: #e67e22; color: white; text-decoration: none; border-radius: 4px; display: inline-block; font-weight: bold; box-shadow: 0 4px 6px rgba(230, 126, 34, 0.2); transition: all 0.3s;\">\n            🛠️ Open Contract &amp; Complete Amendments\n        </a>\n    {% else %}\n        <!-- Fallback: opens the original opportunity -->\n        <a href=\"{{ frappe.utils.get_url_to_form(doc.doctype, doc.name) }}\" style=\"padding: 12px 24px; background-color: #2c3e50; color: white; text-decoration: none; border-radius: 4px; display: inline-block; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1);\">\n            📂 Open Opportunity\n        </a>\n    {% endif %}\n</p>\n\n<br>\n<p>— Sabre Sales System</p>",
   "message_type": "Markdown",
   "method": null,
   "minutes_offset": 0,
-  "modified": "2026-07-06 16:15:04.888841",
+  "modified": "2026-07-27 11:00:37.174023",
   "module": null,
-  "name": "إرجاع العقد الموقّع للتعديل أو استكمال التوقيع — {{ doc.name }}",
+  "name": "Sabre AM - Signed Contract Returned",
   "print_format": null,
   "property_value": null,
   "recipients": [
@@ -682,7 +682,7 @@
     "bcc": null,
     "cc": null,
     "condition": null,
-    "receiver_by_document_field": "owner",
+    "receiver_by_document_field": "pipeline_am",
     "receiver_by_role": null
    }
   ],
@@ -692,7 +692,7 @@
   "sender_email": null,
   "set_property_after_alert": null,
   "slack_webhook_url": null,
-  "subject": "⚠️ تنبيه: تمت إعادة العقد الموقّع للفرصة {{ doc.name }} لوجود ملاحظات وتعديلات",
+  "subject": "⚠️ Notice: Signed contract for opportunity {{ doc.name }} returned for amendment",
   "value_changed": "workflow_state"
  }
 ]

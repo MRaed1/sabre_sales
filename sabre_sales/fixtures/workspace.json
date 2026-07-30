@@ -34,7 +34,7 @@
   "link_to": null,
   "link_type": "DocType",
   "links": [],
-  "modified": "2026-07-20 15:49:48.706172",
+  "modified": "2026-07-26 11:23:56.197224",
   "module": "Sabre Sales",
   "name": "Sabre Sales",
   "number_cards": [],
@@ -54,6 +54,9 @@
    },
    {
     "role": "Sabre CSM"
+   },
+   {
+    "role": "Sabre Product Team"
    }
   ],
   "sequence_id": 17.0,
