@@ -1,0 +1,20 @@
+
+/* Sabre Sales sidebar: orange hover using real DOM classes */
+.body-sidebar .sidebar-item-container .standard-sidebar-item:hover,
+.body-sidebar .sidebar-item-container .standard-sidebar-item.active-sidebar {
+    background-color: rgba(255, 140, 0, 0.15) !important;
+    border-left: 3px solid #ff8c00 !important;
+}
+
+.body-sidebar .sidebar-item-container .standard-sidebar-item:hover .sidebar-item-icon,
+.body-sidebar .sidebar-item-container .standard-sidebar-item:hover .sidebar-item-label {
+    color: #ff8c00 !important;
+}
+
+/* Section break rows (Pipeline / Reports & Insights / Data & Reference) sit in their
+   own sidebar-item-container with no href on the inner anchor. Give every
+   sidebar-item-container a top divider except the very first one, so each new
+   group (which always starts with a section break) gets a visible line above it. */
+.body-sidebar .sidebar-items .sidebar-item-container + .sidebar-item-container {
+    border-top: 1px solid var(--border-color, #d1d8dd);
+}

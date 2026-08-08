@@ -343,3 +343,5 @@ fixtures += [
     }
 ]
 after_migrate = ["sabre_sales.setup.import_workspace"]
+
+app_include_css = "/assets/sabre_sales/css/sabre_sidebar.css"
