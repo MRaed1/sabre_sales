@@ -47,13 +47,13 @@
   "doctype_event": "Before Save",
   "enable_rate_limit": 0,
   "event_frequency": "All",
-  "modified": "2026-08-07 00:08:27.106557",
+  "modified": "2026-08-10 14:28:24.892887",
   "module": "Sabre Sales",
   "name": "validate-sabre-sales-opportunity",
   "rate_limit_count": 5,
   "rate_limit_seconds": 86400,
   "reference_doctype": "Sabre Sales Opportunity",
-  "script": "# التحقق من الحقول الأساسية\r\nif not doc.opportunity_type:\r\n    frappe.throw(\"يجب تحديد نوع الفرصة / Opportunity Type is required\")\r\n\r\nif not doc.pipeline_am:\r\n    frappe.throw(\"يجب تعيين Pipeline AM\")\r\n\r\nif not doc.customer:\r\n    frappe.throw(\"يجب تحديد العميل / Customer is required\")\r\n\r\n# التحقق من نوع الفرصة\r\nif doc.opportunity_type == \"Renewal\" and not doc.expected_revenue:\r\n    frappe.throw(\"يجب إدخال Expected Revenue لفرص التجديد\")",
+  "script": "# Validate required fields\nif not doc.opportunity_type:\n    frappe.throw(\"Opportunity Type is required\")\n\nif not doc.pipeline_am:\n    frappe.throw(\"Pipeline AM is required\")\n\nif not doc.customer:\n    frappe.throw(\"Customer is required\")\n",
   "script_type": "DocType Event"
  },
  {
@@ -85,13 +85,13 @@
   "doctype_event": "Before Save",
   "enable_rate_limit": 0,
   "event_frequency": "All",
-  "modified": "2026-08-07 12:06:54.455983",
+  "modified": "2026-08-10 14:29:11.468716",
   "module": "Sabre Sales",
   "name": "validate-sabre-business-case",
   "rate_limit_count": 5,
   "rate_limit_seconds": 86400,
   "reference_doctype": "Sabre Business Case",
-  "script": "# Validate required fields\nif not doc.opportunity:\n    frappe.throw(\"Business Case must be linked to a sales Opportunity\")\n\nif not doc.customer:\n    frappe.throw(\"Customer is required\")\n\nif not doc.pipeline_am:\n    frappe.throw(\"Pipeline AM is required\")\n\n# if not doc.commercial_proposal:\n#     frappe.throw(\"Commercial Proposal is required\")\n\nif not doc.proposal_date:\n    frappe.throw(\"Proposal Date is required\")\n\n# Require a reason when rejected\nif doc.status == \"Rejected\" and not doc.head_of_sales_notes:\n    frappe.throw(\"Please enter the rejection reason in Head of Sales Notes\")",
+  "script": "# Validate required fields\nif not doc.opportunity:\n    frappe.throw(\"Business Case must be linked to a sales Opportunity\")\n\nif not doc.customer:\n    frappe.throw(\"Customer is required\")\n\nif not doc.pipeline_am:\n    frappe.throw(\"Pipeline AM is required\")\n\n# if not doc.commercial_proposal:\n#     frappe.throw(\"Commercial Proposal is required\")\n\nif not doc.proposal_date:\n    frappe.throw(\"Proposal Date is required\")\n\n# Require a reason when rejected\nif doc.status == \"Rejected\" and not doc.head_of_sales_notes:\n    frappe.throw(\"Please enter the rejection reason in Head of Sales Notes\")\n\n# Require Expected Revenue for Renewal opportunities\nif doc.opportunity:\n    opportunity_type = frappe.db.get_value(\"Sabre Sales Opportunity\", doc.opportunity, \"opportunity_type\")\n    if opportunity_type == \"Renewal\" and not doc.true_expected_revenue:\n        frappe.throw(\"Expected Revenue must be entered for Renewal opportunities\")\n",
   "script_type": "DocType Event"
  },
  {
