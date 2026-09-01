@@ -262,6 +262,21 @@ fixtures = [
         "filters": [["module", "=", "Sabre Sales"]]
     },
     {
+        "doctype": "Server Script",
+        "filters": [["name", "in", [
+            "Sync Agency Portfolio Fields from Opportunity",
+            "Auto-Promote Prospect to Existing Customer",
+            "Auto-Assign CSM Round Robin",
+            "Auto-Assign CSM Team on Implementation",
+            "Lock Sabre Contract After Signing",
+            "Link Sabre Contract to Agency Contract",
+            "Sync Sabre Agency to HD Customer",
+            "Notify CSM & Mark Won",
+            "Opportunity → Notify Product Team",
+            "Business Case Visibility Filter"
+    ]]]
+    },
+    {
         "doctype": "Client Script",
         "filters": [["module", "=", "Sabre Sales"]]
     },
@@ -345,3 +360,22 @@ fixtures += [
 after_migrate = ["sabre_sales.setup.import_workspace"]
 
 app_include_css = "/assets/sabre_sales/css/sabre_sidebar.css"
+
+
+# --- MIDT agency resolution -------------------------------------------------
+# Every MIDT Record carries a resolved link to exactly one Sabre Agency, so no
+# query has to re-derive agency scope. These keep it current without anyone
+# having to remember to run anything.
+
+doc_events = {
+    "Sabre Agency": {
+        "after_insert": "sabre_sales.midt_uploader.resolve_agency_on_save",
+        "on_update": "sabre_sales.midt_uploader.resolve_agency_on_save",
+    }
+}
+
+scheduler_events = {
+    "daily": [
+        "sabre_sales.midt_uploader.resolve_agency_links",
+    ]
+}
