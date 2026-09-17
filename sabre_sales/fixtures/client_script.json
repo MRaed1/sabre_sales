@@ -2,6 +2,17 @@
  {
   "docstatus": 0,
   "doctype": "Client Script",
+  "dt": "Sabre Sales Opportunity",
+  "enabled": 1,
+  "modified": "2026-06-07 17:55:52.066294",
+  "module": "Sabre Sales",
+  "name": "client-sabre-sales-opportunity",
+  "script": "frappe.ui.form.on('Sabre Sales Opportunity', {\r\n    \r\n    refresh(frm) {\r\n        if (frm.doc.opportunity_type) {\r\n            frm.trigger('opportunity_type');\r\n        }\r\n\r\n        // التحقق أن المستند تم حفظه وليس مسودة جديدة\r\n        if (!frm.is_new()) {\r\n            \r\n            // 1️⃣ خط الدفاع الأول: جلب الحالة الحقيقية من السيرفر فوراً لمنع الكاش القديم\r\n            frappe.db.get_value('Sabre Sales Opportunity', frm.doc.name, 'workflow_state', (r) => {\r\n                \r\n                if (r && r.workflow_state !== frm.doc.workflow_state) {\r\n                    // إذا تغيرت الحالة في الخلفية (عند اختيار No مثلاً)، حدّث الصفحة بأكملها فوراً تلقائياً\r\n                    frm.reload_doc();\r\n                } else {\r\n                    // 2️⃣ إذا كانت البيانات محدثة ومطابقة، ارسم الأزرار بناءً على الحالة الصحيحة\r\n                    if (frm.doc.workflow_state === 'Qualification') {\r\n                        \r\n                        frappe.db.get_value('Sabre Qualification Checklist', {opportunity: frm.doc.name}, 'name', (res) => {\r\n                            if (res && res.name) {\r\n                                // السيناريو أ: الـ Checklist موجودة مسبقاً\r\n                                frm.add_custom_button('👁️ عرض Qualification Checklist', () => {\r\n                                    frappe.set_route('Form', 'Sabre Qualification Checklist', res.name);\r\n                                }).addClass('btn-primary');\r\n                            } else {\r\n                                // السيناريو ب: الـ Checklist غير موجودة\r\n                                frm.add_custom_button('📋 إنشاء Qualification Checklist', () => {\r\n                                    frappe.new_doc('Sabre Qualification Checklist', {\r\n                                        opportunity: frm.doc.name\r\n                                    });\r\n                                }).addClass('btn-primary');\r\n                            }\r\n                        });\r\n                    }\r\n                }\r\n            });\r\n        }\r\n    }\r\n});",
+  "view": "Form"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Client Script",
   "dt": "Sabre Qualification Checklist",
   "enabled": 1,
   "modified": "2026-08-04 17:06:45.844648",
@@ -70,10 +81,10 @@
   "doctype": "Client Script",
   "dt": "Sabre Sales Opportunity",
   "enabled": 1,
-  "modified": "2026-08-30 13:42:01.189459",
+  "modified": "2026-09-02 20:04:04.934579",
   "module": "Sabre Sales",
   "name": "Opportunity MIDT Autofill",
-  "script": "frappe.ui.form.on('Sabre Sales Opportunity', {\n    refresh: function(frm) {\n        ['total_gds_volume', 'airline_mix', 'sabre_bookings', 'sabre_share',\n         'amadeus_bookings', 'travelport_bookings', 'yoy_review'].forEach(function(f) {\n            frm.set_df_property(f, 'read_only', 1);\n        });\n    },\n    customer: function(frm) {\n        if (!frm.doc.customer) return;\n        frappe.db.get_value('Sabre Agency', frm.doc.customer,\n                            ['iata', 'sf_top_account']).then(r => {\n            if (!r.message || (!r.message.iata && !r.message.sf_top_account)) {\n                frappe.msgprint('This agency has no IATA number or SF Top Account.');\n                return;\n            }\n            frappe.call({\n                method: 'midt_agency_stats',\n                args: { iata: r.message.iata, sf: r.message.sf_top_account },\n                callback: function(res) {\n                    let d = res.message;\n                    frm.set_value('total_gds_volume', d.total_gds_volume);\n                    frm.set_value('airline_mix', d.airline_mix);\n                    frm.set_value('sabre_bookings', d.sabre_bookings);\n                    frm.set_value('sabre_share', d.sabre_share);\n                    frm.set_value('amadeus_bookings', d.amadeus_bookings);\n                    frm.set_value('travelport_bookings', d.travelport_bookings);\n                    frm.set_value('yoy_review', d.yoy_review);\n                    frappe.show_alert('MIDT data loaded: ' + d.total_gds_volume +\n                                      ' bookings, Sabre share ' + d.sabre_share +\n                                      '%, YoY ' + d.yoy_review);\n                }\n            });\n        });\n    }\n});\n",
+  "script": "frappe.ui.form.on('Sabre Sales Opportunity', {\n    customer: function(frm) {\n        if (!frm.doc.customer) return;\n        // The agency name is the scope - no need to look up IATA or SF first.\n        frappe.call({\n            method: 'midt_agency_stats',\n            args: { agency: frm.doc.customer },\n            callback: function(res) {\n                let d = res.message;\n                if (!d) return;\n                frm.set_value('total_gds_volume', d.total_gds_volume);\n                frm.set_value('airline_mix', d.airline_mix);\n                frm.set_value('sabre_bookings', d.sabre_bookings);\n                frm.set_value('sabre_share', d.sabre_share);\n                frm.set_value('amadeus_bookings', d.amadeus_bookings);\n                frm.set_value('travelport_bookings', d.travelport_bookings);\n                frm.set_value('yoy_review', d.yoy_review);\n                frappe.show_alert('MIDT data loaded (last 12 months): ' +\n                                  d.total_gds_volume + ' bookings, Sabre share ' +\n                                  d.sabre_share + '%, YoY ' + d.yoy_review);\n            }\n        });\n    }\n});\n",
   "view": "Form"
  },
  {

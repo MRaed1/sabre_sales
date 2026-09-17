@@ -5,9 +5,6 @@ from frappe.utils import now
 
 @frappe.whitelist()
 def import_midt(upload_name):
-    # Suppresses the per-agency doc_events hook while the import runs; the
-    # single resolve_agency_links() pass at the end covers everything.
-    frappe.flags.in_midt_import = True
     """Parse the Excel attached to a MIDT Upload doc and load it into MIDT Record.
     Replaces overlapping months so monthly re-uploads are safe."""
     upload = frappe.get_doc('MIDT Upload', upload_name)
@@ -24,6 +21,10 @@ def import_midt(upload_name):
     path = file_doc.get_full_path()
 
     try:
+        # Suppresses the per-agency doc_events hook while the import runs; the
+        # single resolve_agency_links() pass at the end covers everything.
+        frappe.flags.in_midt_import = True
+
         wb = openpyxl.load_workbook(path, read_only=True, data_only=True)
         if 'Sheet1' in wb.sheetnames:
             ws = wb['Sheet1']
@@ -151,6 +152,11 @@ def import_midt(upload_name):
         frappe.db.commit()
         _notify(upload, 'MIDT import failed', str(e)[:400], ok=False)
         raise
+
+    finally:
+        # Must always clear. Otherwise every later Sabre Agency save handled by
+        # this same worker process silently skips resolve_agency_on_save.
+        frappe.flags.in_midt_import = False
 
 
 def _sync_agencies():
@@ -429,6 +435,23 @@ def resolve_agency_links():
         JOIN `tabSabre Agency` a ON a.sf_top_account = m.sf_top_account
         SET m.agency = a.name
         WHERE m.iata IN %(ph)s AND IFNULL(a.sf_top_account, '') != ''
+    """, {'ph': placeholders})
+
+
+    # 4. Consolidator tenants. Some IATAs carry several companies, each with its
+    #    own SC Code (Sabre's account code). A card with a BLANK iata and an
+    #    sc_code claims those rows - but only where the card sitting on the
+    #    row's IATA has a DIFFERENT sc_code, so branch cards keep their own
+    #    volume. LT67 spans 11 IATAs with 10 real KANOO branch cards; none move.
+    frappe.db.sql("""
+        UPDATE `tabMIDT Record` m
+        JOIN `tabSabre Agency` t
+          ON t.sc_code = m.sc_code AND IFNULL(t.iata, '') = ''
+        LEFT JOIN `tabSabre Agency` h ON h.iata = m.iata
+        SET m.agency = t.name
+        WHERE m.iata NOT IN %(ph)s
+          AND IFNULL(m.sc_code, '') NOT IN ('', '-', 'UNK')
+          AND (h.name IS NULL OR IFNULL(h.sc_code, '') <> m.sc_code)
     """, {'ph': placeholders})
 
     frappe.db.commit()

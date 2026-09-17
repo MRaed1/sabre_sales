@@ -111,7 +111,7 @@
   "message_type": "Markdown",
   "method": null,
   "minutes_offset": 0,
-  "modified": "2026-08-19 14:42:39.948726",
+  "modified": "2026-09-17 14:16:23.499124",
   "module": null,
   "name": "notify-finance-implementation",
   "print_format": null,
@@ -123,6 +123,13 @@
     "condition": null,
     "receiver_by_document_field": null,
     "receiver_by_role": "Sabre Finance Manager"
+   },
+   {
+    "bcc": null,
+    "cc": null,
+    "condition": null,
+    "receiver_by_document_field": null,
+    "receiver_by_role": "Sabre Finance"
    }
   ],
   "send_system_notification": 1,

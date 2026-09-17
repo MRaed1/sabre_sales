@@ -26,7 +26,7 @@ app_license = "mit"
 
 # include js, css files in header of desk.html
 # app_include_css = "/assets/sabre_sales/css/sabre_sales.css"
-app_include_js = "/assets/sabre_sales/js/sabre_sales.js"
+app_include_js = "/assets/sabre_sales/js/sabre_sales.js?v=202609171144"
 
 # include js, css files in header of web template
 # web_include_css = "/assets/sabre_sales/css/sabre_sales.css"
@@ -359,7 +359,7 @@ fixtures += [
 ]
 after_migrate = ["sabre_sales.setup.import_workspace"]
 
-app_include_css = "/assets/sabre_sales/css/sabre_sidebar.css"
+app_include_css = "/assets/sabre_sales/css/sabre_sidebar.css?v=202609171144"
 
 
 # --- MIDT agency resolution -------------------------------------------------
