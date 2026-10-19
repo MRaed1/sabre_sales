@@ -5,7 +5,7 @@
   "document_type": "Sabre Sales Opportunity",
   "enable_action_confirmation": 1,
   "is_active": 1,
-  "modified": "2026-08-07 14:28:50.124396",
+  "modified": "2026-10-04 13:14:20.812288",
   "name": "Sabre Sales Pipeline",
   "override_status": 0,
   "send_email_alert": 1,
@@ -123,7 +123,7 @@
     "workflow_builder_id": "8"
    },
    {
-    "allow_edit": "Sabre Account Manager",
+    "allow_edit": "Sabre CSM",
     "avoid_status_override": 0,
     "doc_status": "0",
     "evaluate_as_expression": 0,
@@ -137,7 +137,7 @@
     "workflow_builder_id": "9"
    },
    {
-    "allow_edit": "Sabre Account Manager",
+    "allow_edit": "Sabre CSM",
     "avoid_status_override": 0,
     "doc_status": "0",
     "evaluate_as_expression": 0,
