@@ -359,7 +359,7 @@ fixtures += [
 ]
 after_migrate = ["sabre_sales.setup.import_workspace"]
 
-app_include_css = "/assets/sabre_sales/css/sabre_sidebar.css?v=202609171144"
+app_include_css = "/assets/sabre_sales/css/sabre_sidebar.css?v=202610291059"
 
 
 # --- MIDT agency resolution -------------------------------------------------

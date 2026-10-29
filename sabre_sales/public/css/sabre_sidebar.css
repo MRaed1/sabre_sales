@@ -18,3 +18,19 @@
 .body-sidebar .sidebar-items .sidebar-item-container + .sidebar-item-container {
     border-top: 1px solid var(--border-color, #d1d8dd);
 }
+
+
+/* ==== SABRE COLLAPSED SIDEBAR ====
+   The notification bell is the only sidebar item with a badge, and
+   notification_badge.js clears `overflow` three levels up from its icon so
+   the badge can sit proud of the bell. That also defeats the clip that
+   hides the label when the sidebar is collapsed, so "Notification" alone
+   spilled past the rail.
+
+   Collapsed state is `.body-sidebar-container` WITHOUT `.expanded`
+   (sidebar.scss:209). Removing the label from layout works whichever
+   ancestor was doing the clipping, and leaves the badge untouched. */
+.body-sidebar-container:not(.expanded) .sidebar-notification .sidebar-item-label {
+    display: none !important;
+}
+/* ==== SABRE COLLAPSED SIDEBAR END ==== */
