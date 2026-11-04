@@ -377,5 +377,23 @@ doc_events = {
 scheduler_events = {
     "daily": [
         "sabre_sales.midt_uploader.resolve_agency_links",
-    ]
+    ],
+    # frappe/hooks.py declares the inbound mail pull under "0/10 * * * *",
+    # and sync_jobs() reconciles Scheduled Job Type against app hooks on
+    # every migrate - so a hand-edited cron on that row is reset every
+    # time. It was lost that way on 22 Sep and again on 19 Oct.
+    #
+    # Re-declaring the SAME method here does NOT create a second pull job:
+    # insert_single_event() looks the row up by `method`, not by name, and
+    # updates it in place. frappe's hooks are merged before any other
+    # app's, so ours is applied last and wins - the same reason
+    # claudion_3cx's crons have survived every migrate since September.
+    #
+    # Do not "fix" this in frappe/hooks.py instead: framework code cannot
+    # be committed to a Sabre repo and the next frappe update reverts it.
+    "cron": {
+        "0/2 * * * *": [
+            "frappe.email.doctype.email_account.email_account.pull",
+        ]
+    },
 }
